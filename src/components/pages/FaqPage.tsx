@@ -69,60 +69,60 @@ export const FaqPage: React.FC = () => {
 
       {/* Migration Playbooks Highlights */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-zinc-800 bg-[#0f1117] p-4 space-y-2">
-          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
-            <Mail className="h-4 w-4" />
+        <div className="rounded-2xl border border-zinc-800 bg-[#0f1117] p-5 space-y-2.5">
+          <div className="flex items-center gap-2 text-sm font-semibold text-emerald-400">
+            <Mail className="h-5 w-5" />
             <span>Email Migration</span>
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">
+          <p className="text-sm text-zinc-300 leading-relaxed">
             Use Proton Easy Switch or Tuta Mail import to seamlessly transfer Gmail folders and contacts.
           </p>
         </div>
 
-        <div className="rounded-xl border border-zinc-800 bg-[#0f1117] p-4 space-y-2">
-          <div className="flex items-center gap-2 text-xs font-semibold text-blue-400">
-            <Key className="h-4 w-4" />
+        <div className="rounded-2xl border border-zinc-800 bg-[#0f1117] p-5 space-y-2.5">
+          <div className="flex items-center gap-2 text-sm font-semibold text-blue-400">
+            <Key className="h-5 w-5" />
             <span>Password Vaults</span>
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">
+          <p className="text-sm text-zinc-300 leading-relaxed">
             Export Chrome CSV credentials into Bitwarden or KeePassXC with zero-knowledge master passwords.
           </p>
         </div>
 
-        <div className="rounded-xl border border-zinc-800 bg-[#0f1117] p-4 space-y-2">
-          <div className="flex items-center gap-2 text-xs font-semibold text-purple-400">
-            <Shield className="h-4 w-4" />
+        <div className="rounded-2xl border border-zinc-800 bg-[#0f1117] p-5 space-y-2.5">
+          <div className="flex items-center gap-2 text-sm font-semibold text-purple-400">
+            <Shield className="h-5 w-5" />
             <span>Encrypted DNS</span>
           </div>
-          <p className="text-xs text-zinc-400 leading-relaxed">
+          <p className="text-sm text-zinc-300 leading-relaxed">
             Switch your router or phone Private DNS to Quad9 (9.9.9.9) or self-hosted Pi-hole to block trackers at the wire.
           </p>
         </div>
       </div>
 
       {/* FAQ Accordion List */}
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {FAQS.map((faq, index) => {
           const isOpen = openIndex === index;
           return (
             <div
               key={index}
-              className="rounded-xl border border-zinc-800 bg-[#0f1117] transition hover:border-zinc-700/80 overflow-hidden"
+              className="rounded-2xl border border-zinc-800 bg-[#0f1117] transition hover:border-zinc-700/80 overflow-hidden"
             >
               <button
                 onClick={() => toggle(index)}
-                className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-xs sm:text-sm font-semibold text-white focus:outline-none"
+                className="flex w-full items-center justify-between p-5 sm:p-6 text-left text-sm sm:text-base font-semibold text-white focus:outline-none"
               >
                 <span>{faq.question}</span>
                 {isOpen ? (
-                  <ChevronUp className="h-4 w-4 text-zinc-400 shrink-0 ml-2" />
+                  <ChevronUp className="h-5 w-5 text-zinc-400 shrink-0 ml-3" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-zinc-400 shrink-0 ml-2" />
+                  <ChevronDown className="h-5 w-5 text-zinc-400 shrink-0 ml-3" />
                 )}
               </button>
 
               {isOpen && (
-                <div className="border-t border-zinc-800/80 bg-zinc-950/60 p-4 sm:p-5 text-xs text-zinc-300 leading-relaxed animate-in slide-in-from-top-1 duration-150">
+                <div className="border-t border-zinc-800/80 bg-zinc-950/60 p-5 sm:p-6 text-sm text-zinc-300 leading-relaxed animate-in slide-in-from-top-1 duration-150">
                   {faq.answer}
                 </div>
               )}

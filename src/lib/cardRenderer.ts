@@ -616,8 +616,8 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
     const gridTop = headerBottom + 24 + Math.max(0, (availableGridHeight - totalGridHeight) / 2);
 
     // Responsive icon and typography sizing
-    const iconSize = Math.max(34, Math.min(54, Math.round(cardHeight * 0.3)));
-    const labelFontSize = cardWidth >= 440 ? 18 : (cardWidth >= 340 ? 16 : 14);
+    const iconSize = Math.max(38, Math.min(58, Math.round(cardHeight * 0.34)));
+    const labelFontSize = cardWidth >= 440 ? 19 : (cardWidth >= 340 ? 17 : 15);
 
     activeItems.forEach((item, index) => {
       const col = index % columns;
@@ -739,12 +739,12 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
         );
       } else if (item.alternatives.length === 2) {
         // Stack 2 mini rows
-        const miniSize = Math.max(24, Math.min(34, Math.round(iconSize * 0.72)));
+        const miniSize = Math.max(26, Math.min(38, Math.round(iconSize * 0.74)));
         const rowGap = 5;
         const stackH = miniSize * 2 + rowGap;
         const stackStartY = centerY - stackH / 2;
         const miniLabelW = colWidth - miniSize - 8;
-        const miniFontSize = Math.max(12, Math.round(labelFontSize * 0.85));
+        const miniFontSize = Math.max(13, Math.round(labelFontSize * 0.86));
 
         for (let i = 0; i < 2; i++) {
           const a = item.alternatives[i];
@@ -763,12 +763,12 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
         }
       } else {
         // Stack 3 mini rows
-        const miniSize = Math.max(20, Math.min(26, Math.round(iconSize * 0.58)));
+        const miniSize = Math.max(22, Math.min(29, Math.round(iconSize * 0.6)));
         const rowGap = 3;
         const stackH = miniSize * 3 + rowGap * 2;
         const stackStartY = centerY - stackH / 2;
         const miniLabelW = colWidth - miniSize - 6;
-        const miniFontSize = Math.max(11, Math.round(labelFontSize * 0.75));
+        const miniFontSize = Math.max(12, Math.round(labelFontSize * 0.76));
 
         for (let i = 0; i < Math.min(3, item.alternatives.length); i++) {
           const a = item.alternatives[i];

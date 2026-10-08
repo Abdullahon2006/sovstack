@@ -29,11 +29,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks: { id: ActivePage; label: string; icon: React.ReactNode }[] = [
-    { id: 'builder', label: 'Builder', icon: <Layers className="h-3.5 w-3.5" /> },
-    { id: 'dossiers', label: 'Gigamons', icon: <ShieldAlert className="h-3.5 w-3.5" /> },
-    { id: 'alternatives', label: 'Alternatives', icon: <Sparkles className="h-3.5 w-3.5" /> },
-    { id: 'about', label: 'Manifesto', icon: <BookOpen className="h-3.5 w-3.5" /> },
-    { id: 'faq', label: 'FAQ', icon: <HelpCircle className="h-3.5 w-3.5" /> },
+    { id: 'builder', label: 'Builder', icon: <Layers className="h-4 w-4" /> },
+    { id: 'dossiers', label: 'Gigamons', icon: <ShieldAlert className="h-4 w-4" /> },
+    { id: 'alternatives', label: 'Alternatives', icon: <Sparkles className="h-4 w-4" /> },
+    { id: 'about', label: 'Manifesto', icon: <BookOpen className="h-4 w-4" /> },
+    { id: 'faq', label: 'FAQ', icon: <HelpCircle className="h-4 w-4" /> },
   ];
 
   const handleNavClick = (page: ActivePage) => {
@@ -43,21 +43,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090b]/95 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
         {/* Brand & Left Navigation */}
         <div className="flex items-center gap-6">
           <button
             onClick={() => handleNavClick('builder')}
-            className="flex items-center gap-2.5 focus:outline-none text-left"
+            className="flex items-center gap-3 focus:outline-none text-left"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-800 text-white border border-zinc-700">
-              <Shield className="h-4 w-4 text-emerald-400" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-800 text-white border border-zinc-700 shadow-sm">
+              <Shield className="h-5 w-5 text-emerald-400" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-base font-bold tracking-tight text-white">DeGigamon</span>
+              <div className="flex items-center gap-2.5">
+                <span className="text-base sm:text-lg font-bold tracking-tight text-white">DeGigamon</span>
                 {activePage === 'builder' && (
-                  <span className="text-[11px] text-zinc-500 font-medium hidden md:inline">
+                  <span className="text-xs text-zinc-400 font-medium hidden md:inline">
                     {activeCategoriesCount}/{totalCategoriesCount} switched
                   </span>
                 )}
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                  className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition ${
                     isActive
                       ? 'bg-zinc-800 text-white font-semibold'
                       : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }
               }}
               defaultValue=""
-              className="appearance-none rounded-lg border border-zinc-800 bg-zinc-900/90 px-3 py-1.5 pr-7 text-xs font-medium text-zinc-300 transition hover:border-zinc-700 focus:border-zinc-500 focus:outline-none cursor-pointer"
+              className="appearance-none rounded-xl border border-zinc-800 bg-zinc-900/90 px-3.5 py-2 pr-8 text-sm font-medium text-zinc-300 transition hover:border-zinc-700 focus:border-zinc-500 focus:outline-none cursor-pointer"
             >
               <option value="" disabled>Presets...</option>
               {PRESET_STACKS.map((preset) => (
@@ -109,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute right-2.5 top-2.5 text-zinc-500 text-[10px]">
+            <div className="pointer-events-none absolute right-3 top-2.5 text-zinc-500 text-xs">
               ▾
             </div>
           </div>
@@ -118,9 +118,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onOpenShare}
             title="Share your stack on social networks or copy link"
-            className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+            className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900 px-3.5 py-2 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
           >
-            <Share2 className="h-3.5 w-3.5" />
+            <Share2 className="h-4 w-4" />
             <span className="hidden sm:inline">Share</span>
           </button>
 
@@ -128,27 +128,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onReset}
             title="Reset stack"
-            className="hidden items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 p-2 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200 sm:flex"
+            className="hidden items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900 p-2.5 text-zinc-400 transition hover:bg-zinc-800 hover:text-zinc-200 sm:flex"
           >
-            <RotateCcw className="h-3.5 w-3.5" />
+            <RotateCcw className="h-4 w-4" />
           </button>
 
           {/* Export Card CTA */}
           <button
             onClick={onOpenExport}
-            className="flex items-center gap-1.5 rounded-lg bg-white px-3.5 py-1.5 text-xs font-semibold text-black transition hover:bg-zinc-200 active:scale-95 shadow-sm"
+            className="flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition hover:bg-zinc-200 active:scale-95 shadow-sm"
           >
-            <Download className="h-3.5 w-3.5" />
+            <Download className="h-4 w-4" />
             <span>EXPORT</span>
           </button>
 
           {/* Mobile Menu Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-lg border border-zinc-800 bg-zinc-900 p-1.5 text-zinc-400 hover:text-white lg:hidden"
+            className="rounded-xl border border-zinc-800 bg-zinc-900 p-2 text-zinc-400 hover:text-white lg:hidden"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>

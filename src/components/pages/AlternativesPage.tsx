@@ -87,16 +87,16 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
       </div>
 
       {/* Search & Filters */}
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="relative flex-1 max-w-md">
-            <Search className="pointer-events-none absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-500" />
+            <Search className="pointer-events-none absolute left-3.5 top-3 h-4 w-4 text-zinc-500" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search tools, categories, or services they replace..."
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-900/90 py-1.5 pl-8 pr-3 text-xs text-zinc-200 placeholder-zinc-500 transition focus:border-zinc-500 focus:outline-none"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/90 py-2.5 pl-10 pr-4 text-sm text-zinc-200 placeholder-zinc-500 transition focus:border-zinc-500 focus:outline-none"
             />
           </div>
 
@@ -106,7 +106,7 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
               aria-label="Filter by category"
               value={selectedCategory || ''}
               onChange={(e) => setSelectedCategory(e.target.value || null)}
-              className="appearance-none rounded-lg border border-zinc-800 bg-zinc-900/90 px-3 py-1.5 pr-7 text-xs font-medium text-zinc-300 transition hover:border-zinc-700 focus:border-zinc-500 focus:outline-none cursor-pointer"
+              className="appearance-none rounded-xl border border-zinc-800 bg-zinc-900/90 px-3.5 py-2 pr-8 text-sm font-medium text-zinc-300 transition hover:border-zinc-700 focus:border-zinc-500 focus:outline-none cursor-pointer"
             >
               <option value="">All Categories ({CATEGORIES.length})</option>
               {CATEGORIES.map((cat) => (
@@ -115,7 +115,7 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute right-2.5 top-2.5 text-zinc-500 text-[10px]">
+            <div className="pointer-events-none absolute right-3 top-2.5 text-zinc-500 text-xs">
               ▾
             </div>
           </div>
@@ -125,7 +125,7 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
           <button
             onClick={() => setActiveBadge(null)}
-            className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
+            className={`rounded-lg px-3 py-1.5 text-xs sm:text-sm font-medium transition ${
               activeBadge === null
                 ? 'bg-zinc-200 text-black font-semibold'
                 : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 border border-zinc-800'
@@ -137,7 +137,7 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
             <button
               key={b}
               onClick={() => setActiveBadge(activeBadge === b ? null : b)}
-              className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
+              className={`rounded-lg px-3 py-1.5 text-xs sm:text-sm font-medium transition ${
                 activeBadge === b
                   ? 'bg-zinc-200 text-black font-semibold'
                   : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 border border-zinc-800'
@@ -150,23 +150,23 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
       </div>
 
       {/* Directory Grid */}
-      <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filteredItems.map(({ alt, categoryId, categoryName, replacesMainstream }) => (
           <div
             key={`${categoryId}-${alt.id}`}
-            className="flex flex-col justify-between rounded-xl border border-zinc-800 bg-[#0f1117] p-4 transition hover:border-zinc-700 shadow-sm"
+            className="flex flex-col justify-between rounded-2xl border border-zinc-800 bg-[#0f1117] p-5 transition hover:border-zinc-700 shadow-sm"
           >
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {/* Category Eyebrow & Badges */}
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="font-semibold uppercase tracking-wider text-zinc-500">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-semibold uppercase tracking-wider text-zinc-400">
                   {categoryName}
                 </span>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   {alt.badges.slice(0, 2).map((b) => (
                     <span
                       key={b}
-                      className="rounded bg-zinc-900 px-1.5 py-0.5 text-[9px] font-medium text-emerald-400 border border-zinc-800"
+                      className="rounded-md bg-zinc-900 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-emerald-400 border border-zinc-800"
                     >
                       {b}
                     </span>
@@ -175,32 +175,34 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
               </div>
 
               {/* Title & App Icon */}
-              <div className="flex items-center gap-2.5">
-                <AppIcon appId={alt.id} name={alt.name} size={28} />
+              <div className="flex items-center gap-3">
+                <div className="shrink-0 flex items-center justify-center">
+                  <AppIcon appId={alt.id} name={alt.name} size={36} />
+                </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-sm font-bold text-white truncate">{alt.name}</h2>
-                  <p className="text-[10px] text-zinc-500 truncate">
+                  <h2 className="text-base font-bold text-white truncate">{alt.name}</h2>
+                  <p className="text-xs text-zinc-400 truncate mt-0.5">
                     Replaces {replacesMainstream.slice(0, 2).join(', ')}
                   </p>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs text-zinc-400 line-clamp-3 leading-relaxed">
+              <p className="text-sm text-zinc-300 line-clamp-3 leading-relaxed">
                 {alt.description}
               </p>
             </div>
 
             {/* Actions Footer */}
-            <div className="mt-4 flex items-center justify-between border-t border-zinc-800/80 pt-3">
+            <div className="mt-5 flex items-center justify-between border-t border-zinc-800/80 pt-3.5">
               <a
                 href={alt.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-medium text-zinc-400 hover:text-white transition"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-400 hover:text-white transition"
               >
                 <span>Official Site</span>
-                <ExternalLink className="h-3 w-3" />
+                <ExternalLink className="h-3.5 w-3.5" />
               </a>
 
               {onSelectAlternativeForCategory && onNavigateToBuilder && (
@@ -209,7 +211,7 @@ export const AlternativesPage: React.FC<AlternativesPageProps> = ({
                     onSelectAlternativeForCategory(categoryId, alt.id);
                     onNavigateToBuilder();
                   }}
-                  className="rounded-lg bg-zinc-800 hover:bg-zinc-700 px-2.5 py-1 text-xs font-semibold text-zinc-200 transition"
+                  className="rounded-lg bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 text-sm font-semibold text-zinc-100 transition"
                 >
                   Use in Stack
                 </button>

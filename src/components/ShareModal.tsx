@@ -173,41 +173,41 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         role="dialog"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-800 px-5 py-3.5 bg-zinc-950">
-          <div className="flex items-center gap-2">
-            <Share2 className="h-4 w-4 text-white" />
-            <h2 className="text-sm font-bold text-white">Share Your Privacy Wins</h2>
+        <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4 bg-zinc-950">
+          <div className="flex items-center gap-2.5">
+            <Share2 className="h-5 w-5 text-white" />
+            <h2 className="text-base sm:text-lg font-bold text-white">Share Your Privacy Wins</h2>
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-5 space-y-4">
+        <div className="p-6 space-y-5">
           {/* Card Preview Thumbnail */}
           {previewUrl && (
-            <div className="flex items-center justify-center rounded-lg border border-zinc-800 bg-black p-2 max-h-44 overflow-hidden">
+            <div className="flex items-center justify-center rounded-xl border border-zinc-800 bg-black p-3 max-h-48 overflow-hidden">
               <img
                 src={previewUrl}
                 alt="Card Preview"
-                className="max-h-40 w-auto object-contain rounded"
+                className="max-h-44 w-auto object-contain rounded-lg"
               />
             </div>
           )}
 
           {/* Social Share Buttons */}
           <div>
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
               Post to Social Networks
             </span>
-            <div className="mt-2 grid grid-cols-2 gap-2 text-xs font-medium">
+            <div className="mt-2.5 grid grid-cols-2 gap-2.5 text-sm font-medium">
               <button
                 onClick={shareToTwitter}
-                className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/80 p-2 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
               >
                 <span>𝕏</span>
                 <span>Post on X</span>
@@ -215,7 +215,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
               <button
                 onClick={shareToBluesky}
-                className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/80 p-2 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
               >
                 <span>🦋</span>
                 <span>Bluesky</span>
@@ -223,7 +223,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
               <button
                 onClick={shareToMastodon}
-                className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/80 p-2 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
               >
                 <span>🐘</span>
                 <span>Mastodon</span>
@@ -231,7 +231,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
               <button
                 onClick={shareToReddit}
-                className="flex items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/80 p-2 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
               >
                 <span>🤖</span>
                 <span>Reddit</span>
@@ -240,31 +240,31 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           </div>
 
           {/* Quick Actions (Copy Link, Copy Image, System Share) */}
-          <div className="space-y-2 pt-2 border-t border-zinc-800">
+          <div className="space-y-2.5 pt-2.5 border-t border-zinc-800">
             {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
               <button
                 onClick={handleNativeShare}
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-800 border border-zinc-700 p-2.5 text-xs font-semibold text-white hover:bg-zinc-700 transition"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 border border-zinc-700 p-3 text-sm font-semibold text-white hover:bg-zinc-700 transition"
               >
                 <Share2 className="h-4 w-4" />
                 <span>Open System Share Sheet (Mobile / AirDrop)</span>
               </button>
             )}
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-2 gap-2.5 text-sm">
               <button
                 onClick={handleCopyLink}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-950 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-950 p-2.5 text-zinc-200 hover:bg-zinc-800 transition"
               >
-                {copiedLink ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                {copiedLink ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
                 <span>{copiedLink ? 'Copied Link!' : 'Copy Link'}</span>
               </button>
 
               <button
                 onClick={handleCopyImage}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-950 p-2 text-zinc-200 hover:bg-zinc-800 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-950 p-2.5 text-zinc-200 hover:bg-zinc-800 transition"
               >
-                {copiedImage ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                {copiedImage ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
                 <span>{copiedImage ? 'Copied Image!' : 'Copy PNG'}</span>
               </button>
             </div>
@@ -272,13 +272,13 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-zinc-800 px-5 py-3 bg-zinc-950">
-          <span className="text-[11px] text-zinc-500">
+        <div className="flex items-center justify-between border-t border-zinc-800 px-6 py-3.5 bg-zinc-950">
+          <span className="text-xs text-zinc-400">
             100% Client-Side · No server upload required
           </span>
           <button
             onClick={onClose}
-            className="rounded-lg bg-zinc-800 px-4 py-1.5 text-xs font-semibold text-white hover:bg-zinc-700"
+            className="rounded-xl bg-zinc-800 px-5 py-2 text-sm font-semibold text-white hover:bg-zinc-700 transition"
           >
             Close
           </button>

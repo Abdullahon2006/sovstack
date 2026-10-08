@@ -188,23 +188,23 @@ export const App: React.FC = () => {
       </div>
 
       {/* Comprehensive Publishable Footer */}
-      <footer className="mt-16 border-t border-zinc-800/80 bg-[#0c0c0e] px-4 py-10 sm:px-6 text-xs text-zinc-400">
-        <div className="mx-auto max-w-5xl space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-800/60 pb-6">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-white">DeGigamon</span>
-                <span className="rounded bg-emerald-950/80 px-1.5 py-0.5 text-[10px] font-medium text-emerald-400 border border-emerald-800/60">
+      <footer className="mt-20 border-t border-zinc-800/80 bg-[#0c0c0e] px-4 py-12 sm:px-6 text-sm text-zinc-400">
+        <div className="mx-auto max-w-5xl space-y-7">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-b border-zinc-800/60 pb-7">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2.5">
+                <span className="text-base font-bold text-white">DeGigamon</span>
+                <span className="rounded-md bg-emerald-950/80 px-2 py-0.5 text-xs font-medium text-emerald-400 border border-emerald-800/60">
                   Open Source
                 </span>
               </div>
-              <p className="text-[11px] text-zinc-500">
+              <p className="text-xs sm:text-sm text-zinc-400">
                 The client-side alternative to PrivacyPack.org · Reclaim your digital sovereignty.
               </p>
             </div>
 
             {/* Quick Navigation Links */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm">
               <button
                 onClick={() => setActivePage('builder')}
                 className="hover:text-white transition"
@@ -244,7 +244,7 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] text-zinc-500">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-zinc-500">
             <p>
               100% Client-Side · Zero Cookies · Zero Tracking · MIT License
             </p>

@@ -143,54 +143,54 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
       <div
         ref={modalRef}
-        className="relative flex flex-col w-full max-w-lg max-h-[85vh] overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl text-zinc-100"
+        className="relative flex flex-col w-full max-w-xl max-h-[85vh] overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900 shadow-2xl text-zinc-100"
         role="dialog"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-800 px-5 py-3.5 bg-zinc-950">
+        <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4 bg-zinc-950">
           <div>
-            <h2 className="text-sm font-bold text-white">
+            <h2 className="text-base sm:text-lg font-bold text-white">
               Pick {category.name} Alternatives
             </h2>
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
               Selected: {selectedAlternativeIds.length}/3
             </p>
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Search & Quick Filter Pills */}
-        <div className="p-3 border-b border-zinc-800/80 bg-zinc-900 space-y-2">
+        <div className="p-4 border-b border-zinc-800/80 bg-zinc-900 space-y-3">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-2.5 h-3.5 w-3.5 text-zinc-500" />
+            <Search className="pointer-events-none absolute left-3.5 top-3 h-4 w-4 text-zinc-500" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={`Search ${allAlternatives.length} private alternatives...`}
-              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 py-1.5 pl-8 pr-7 text-xs text-zinc-200 placeholder-zinc-500 transition focus:border-zinc-500 focus:outline-none"
+              className="w-full rounded-xl border border-zinc-800 bg-zinc-950 py-2.5 pl-10 pr-9 text-sm text-zinc-200 placeholder-zinc-500 transition focus:border-zinc-500 focus:outline-none"
             />
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className="absolute right-2.5 top-2 text-zinc-500 hover:text-zinc-300"
+                className="absolute right-3 top-2.5 text-zinc-500 hover:text-zinc-300 p-0.5"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4" />
               </button>
             )}
           </div>
 
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1 overflow-x-auto text-[11px] py-0.5">
+            <div className="flex items-center gap-1.5 overflow-x-auto text-xs py-0.5">
               <button
                 onClick={() => setBadgeFilter(null)}
-                className={`rounded px-2 py-0.5 font-medium transition ${
+                className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
                   badgeFilter === null
                     ? 'bg-zinc-200 text-black font-semibold'
                     : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
@@ -202,7 +202,7 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                 <button
                   key={badge}
                   onClick={() => setBadgeFilter(badgeFilter === badge ? null : badge)}
-                  className={`rounded px-2 py-0.5 font-medium transition ${
+                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
                     badgeFilter === badge
                       ? 'bg-zinc-200 text-black font-semibold'
                       : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
@@ -217,21 +217,21 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
             {onAddCustomAlternative && (
               <button
                 onClick={() => setIsAddingCustom(!isAddingCustom)}
-                className="flex items-center gap-1 rounded bg-zinc-800 hover:bg-zinc-700 px-2 py-1 text-[11px] font-semibold text-emerald-400 shrink-0 transition"
+                className="flex items-center gap-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 px-2.5 py-1 text-xs font-semibold text-emerald-400 shrink-0 transition"
               >
-                <Plus className="h-3 w-3" />
+                <Plus className="h-3.5 w-3.5" />
                 <span>Custom</span>
-                {isAddingCustom ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                {isAddingCustom ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
               </button>
             )}
           </div>
 
           {/* Expandable Add Custom Alternative Form */}
           {isAddingCustom && (
-            <form onSubmit={handleSaveCustom} className="mt-2 rounded-lg border border-zinc-700 bg-zinc-950 p-3 text-xs space-y-2.5 animate-in slide-in-from-top-2 duration-150">
+            <form onSubmit={handleSaveCustom} className="mt-2.5 rounded-xl border border-zinc-700 bg-zinc-950 p-4 text-xs space-y-3 animate-in slide-in-from-top-2 duration-150">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-white">Add Custom Alternative</span>
-                <span className="text-[10px] text-zinc-400">Stored locally in your stack</span>
+                <span className="text-sm font-semibold text-white">Add Custom Alternative</span>
+                <span className="text-xs text-zinc-400">Stored locally in your stack</span>
               </div>
 
               <div>
@@ -312,9 +312,9 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
         </div>
 
         {/* Alternatives List */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-1.5 divide-y divide-zinc-800/40">
+        <div className="flex-1 overflow-y-auto p-3.5 space-y-2 divide-y divide-zinc-800/40">
           {filteredAlternatives.length === 0 ? (
-            <div className="p-8 text-center text-xs text-zinc-500">
+            <div className="p-10 text-center text-sm text-zinc-500">
               No private alternatives match your search.
             </div>
           ) : (
@@ -324,26 +324,26 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                 <div
                   key={alt.id}
                   onClick={() => onToggleAlternative(alt.id)}
-                  className={`flex items-start gap-3 rounded-lg p-2.5 transition cursor-pointer select-none ${
+                  className={`flex items-start gap-3.5 rounded-xl p-3.5 transition cursor-pointer select-none ${
                     isSelected
                       ? 'bg-zinc-800/90 border border-zinc-600'
                       : 'hover:bg-zinc-800/50 border border-transparent'
                   }`}
                 >
                   {/* Icon */}
-                  <div className="mt-0.5 shrink-0">
-                    <AppIcon appId={alt.id} name={alt.name} size={24} />
+                  <div className="mt-0.5 shrink-0 flex items-center justify-center">
+                    <AppIcon appId={alt.id} name={alt.name} size={32} />
                   </div>
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-semibold text-white truncate">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm sm:text-base font-semibold text-white truncate">
                           {alt.name}
                         </span>
                         {alt.isCustom && (
-                          <span className="rounded bg-emerald-950/80 px-1 py-0.2 text-[9px] font-semibold text-emerald-400 border border-emerald-800">
+                          <span className="rounded bg-emerald-950/80 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-800">
                             Custom
                           </span>
                         )}
@@ -354,18 +354,18 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
                             title="Visit official website"
-                            className="text-zinc-500 hover:text-zinc-200"
+                            className="text-zinc-400 hover:text-white p-0.5 transition"
                           >
-                            <ExternalLink className="h-2.5 w-2.5" />
+                            <ExternalLink className="h-3.5 w-3.5" />
                           </a>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
                         {alt.badges.slice(0, 2).map((b) => (
                           <span
                             key={b}
-                            className="rounded bg-zinc-950 px-1.5 py-0.5 text-[9px] font-medium text-zinc-400 border border-zinc-800"
+                            className="rounded-md bg-zinc-950 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-zinc-300 border border-zinc-800"
                           >
                             {b}
                           </span>
@@ -382,27 +382,27 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                             title="Delete custom alternative"
                             className="text-zinc-500 hover:text-red-400 p-1 rounded"
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Trash2 className="h-4 w-4" />
                           </button>
                         )}
                       </div>
                     </div>
 
-                    <p className="mt-1 text-[11px] text-zinc-400 line-clamp-2">
+                    <p className="mt-1.5 text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-2">
                       {alt.description}
                     </p>
                   </div>
 
                   {/* Checkbox */}
-                  <div className="mt-0.5 shrink-0">
+                  <div className="mt-1 shrink-0">
                     <div
-                      className={`flex h-4 w-4 items-center justify-center rounded border transition ${
+                      className={`flex h-5 w-5 items-center justify-center rounded-md border transition ${
                         isSelected
                           ? 'bg-white border-white text-black'
                           : 'border-zinc-700 bg-zinc-950 text-transparent'
                       }`}
                     >
-                      <Check className="h-3 w-3 stroke-[3]" />
+                      <Check className="h-3.5 w-3.5 stroke-[3]" />
                     </div>
                   </div>
                 </div>
@@ -412,13 +412,13 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-zinc-800 px-5 py-3 bg-zinc-950">
-          <span className="text-[11px] text-zinc-500">
+        <div className="flex items-center justify-between border-t border-zinc-800 px-6 py-3.5 bg-zinc-950">
+          <span className="text-xs sm:text-sm text-zinc-400">
             {selectedAlternativeIds.length} of 3 selected
           </span>
           <button
             onClick={onClose}
-            className="rounded-lg bg-white px-4 py-1.5 text-xs font-semibold text-black hover:bg-zinc-200"
+            className="rounded-xl bg-white px-5 py-2 text-sm font-semibold text-black hover:bg-zinc-200 transition"
           >
             Done
           </button>

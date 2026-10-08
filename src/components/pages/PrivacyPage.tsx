@@ -19,18 +19,18 @@ export const PrivacyPage: React.FC = () => {
       </div>
 
       {/* Summary Box */}
-      <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-5 text-xs text-emerald-300 space-y-2">
-        <span className="font-bold text-emerald-200 text-sm">The 10-Second Summary:</span>
+      <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-6 text-sm text-emerald-300 space-y-2">
+        <span className="font-bold text-emerald-200 text-base">The 10-Second Summary:</span>
         <p className="leading-relaxed">
           DeGigamon collects <strong>zero personal data</strong>. We do not use cookies, we do not run Google Analytics, we have no tracking pixels, and we have no server-side database. Everything you do on DeGigamon stays in your browser.
         </p>
       </div>
 
       {/* Sections */}
-      <div className="space-y-6 text-xs text-zinc-300 leading-relaxed">
-        <section className="space-y-2">
-          <h2 className="text-sm font-bold text-white flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+      <div className="space-y-7 text-sm text-zinc-300 leading-relaxed">
+        <section className="space-y-2.5">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <CheckCircle2 className="h-5 w-5 text-emerald-400" />
             <span>1. Information We Collect</span>
           </h2>
           <p>
@@ -38,22 +38,22 @@ export const PrivacyPage: React.FC = () => {
           </p>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-sm font-bold text-white flex items-center gap-2">
-            <Lock className="h-4 w-4 text-emerald-400" />
+        <section className="space-y-2.5">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <Lock className="h-5 w-5 text-emerald-400" />
             <span>2. Local Storage and Client-Side State</span>
           </h2>
           <p>
-            Your pack selections and custom alternatives are saved exclusively in your browser’s local storage (<code className="rounded bg-zinc-900 px-1 py-0.5 text-zinc-300">localStorage</code>) to preserve your preferences across visits. This data never leaves your device unless you choose to share a stateful link.
+            Your pack selections and custom alternatives are saved exclusively in your browser’s local storage (<code className="rounded bg-zinc-900 px-1.5 py-0.5 text-zinc-300 text-xs">localStorage</code>) to preserve your preferences across visits. This data never leaves your device unless you choose to share a stateful link.
           </p>
           <p>
-            When you generate a share link, your configuration is Base64 encoded into the URL hash fragment (<code className="rounded bg-zinc-900 px-1 py-0.5 text-zinc-300">#pack=...</code>). Because URL hash fragments are never sent to web servers during HTTP requests (per RFC 3986), your stack is only decoded by the recipient's client device.
+            When you generate a share link, your configuration is Base64 encoded into the URL hash fragment (<code className="rounded bg-zinc-900 px-1.5 py-0.5 text-zinc-300 text-xs">#pack=...</code>). Because URL hash fragments are never sent to web servers during HTTP requests (per RFC 3986), your stack is only decoded by the recipient's client device.
           </p>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-sm font-bold text-white flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+        <section className="space-y-2.5">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <CheckCircle2 className="h-5 w-5 text-emerald-400" />
             <span>3. Cookies and Third-Party Trackers</span>
           </h2>
           <p>
@@ -61,9 +61,9 @@ export const PrivacyPage: React.FC = () => {
           </p>
         </section>
 
-        <section className="space-y-2">
-          <h2 className="text-sm font-bold text-white flex items-center gap-2">
-            <FileCode className="h-4 w-4 text-emerald-400" />
+        <section className="space-y-2.5">
+          <h2 className="text-base font-bold text-white flex items-center gap-2">
+            <FileCode className="h-5 w-5 text-emerald-400" />
             <span>4. Open Source License & Auditing</span>
           </h2>
           <p>
@@ -71,8 +71,8 @@ export const PrivacyPage: React.FC = () => {
           </p>
         </section>
 
-        <section className="space-y-2 border-t border-zinc-800 pt-4">
-          <h2 className="text-sm font-bold text-white">5. Disclaimer</h2>
+        <section className="space-y-2.5 border-t border-zinc-800 pt-5">
+          <h2 className="text-base font-bold text-white">5. Disclaimer</h2>
           <p className="text-zinc-400">
             DeGigamon is an educational and digital rights initiative. We evaluate privacy tools based on documented cryptographic standards, licensing, and security audits. However, users should always exercise their own diligence when deploying software for mission-critical or life-safety threat models.
           </p>

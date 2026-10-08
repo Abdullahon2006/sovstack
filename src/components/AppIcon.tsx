@@ -441,10 +441,11 @@ export const AppIcon: React.FC<AppIconProps> = ({ appId, name, size = 20, classN
     // Fallback: Elegant Monogram Badge with clean initial
     default: {
       const initial = (name || '?').charAt(0).toUpperCase();
+      const fontSize = Math.max(11, Math.round(s * 0.44));
       return (
         <div
-          style={{ width: s, height: s, minWidth: s }}
-          className={`flex items-center justify-center rounded bg-zinc-800 text-[10px] font-bold text-zinc-200 border border-zinc-700 select-none ${className}`}
+          style={{ width: s, height: s, minWidth: s, fontSize: `${fontSize}px` }}
+          className={`flex items-center justify-center rounded-lg bg-zinc-800 font-bold text-zinc-100 border border-zinc-700 select-none ${className}`}
         >
           {initial}
         </div>
