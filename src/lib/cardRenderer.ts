@@ -163,8 +163,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
   // Pill Text
   ctx.font = `bold 30px ${t.fontFamily}`;
   ctx.fillStyle = theme === 'eink' ? '#000000' : '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.fillText(`🛡️ ${sovereigntyScore}% SOVEREIGN`, badgeX + badgeWidth / 2, badgeY + 48);
+  ctx.fillText(`${sovereigntyScore}% SOVEREIGN`, badgeX + badgeWidth / 2, badgeY + 48);
 
   // Active Category Items
   const activeItems: {
@@ -241,31 +240,31 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
     ctx.textAlign = 'left';
     ctx.fillText(item.categoryName.toUpperCase(), x + 20, y + 32);
 
-    // Left Side: Mainstream / Gigamon (Strikethrough / Warning)
+    // Left Side: Mainstream / Gigamon (Strikethrough)
     const mainstreamY = y + 74;
     ctx.font = `bold 24px ${t.fontFamily}`;
     ctx.fillStyle = t.danger;
-    ctx.fillText(`${item.mainstreamSymbol} ${item.mainstreamName}`, x + 20, mainstreamY);
+    ctx.fillText(item.mainstreamName, x + 20, mainstreamY);
 
     // Subtle strikethrough line over gigamon name
-    const mainstreamWidth = ctx.measureText(`${item.mainstreamSymbol} ${item.mainstreamName}`).width;
+    const mainstreamWidth = ctx.measureText(item.mainstreamName).width;
     ctx.strokeStyle = t.danger;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
     ctx.moveTo(x + 18, mainstreamY - 8);
     ctx.lineTo(x + 22 + mainstreamWidth, mainstreamY - 8);
     ctx.stroke();
 
     // Transition Arrow
-    ctx.font = `bold 22px ${t.fontFamily}`;
+    ctx.font = `bold 20px ${t.fontFamily}`;
     ctx.fillStyle = t.textMuted;
-    ctx.fillText('➔', x + 20, mainstreamY + 36);
+    ctx.fillText('→', x + 20, mainstreamY + 36);
 
     // Right Side / Bottom: Alternatives
     const altNames = item.alternatives.map((a) => a.name).join(' · ');
     ctx.font = `bold 23px ${t.fontFamily}`;
     ctx.fillStyle = t.accent;
-    ctx.fillText(altNames, x + 56, mainstreamY + 36);
+    ctx.fillText(altNames, x + 50, mainstreamY + 36);
 
     // Badges pill
     const firstBadge = item.alternatives[0]?.badge || 'FOSS';

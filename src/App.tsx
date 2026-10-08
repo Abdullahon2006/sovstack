@@ -7,6 +7,7 @@ import { SovereigntyHeader } from './components/SovereigntyHeader';
 import { CategoryPickerCard } from './components/CategoryPickerCard';
 import { GigamonDossierModal } from './components/GigamonDossierModal';
 import { ExportModal } from './components/ExportModal';
+import { ShareModal } from './components/ShareModal';
 
 export const App: React.FC = () => {
   const {
@@ -34,7 +35,7 @@ export const App: React.FC = () => {
 
   const [inspectedMainstream, setInspectedMainstream] = useState<MainstreamApp | null>(null);
   const [isExportOpen, setIsExportOpen] = useState(false);
-  const [copiedUrl, setCopiedUrl] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   // Filter categories according to search and badge filters
   const filteredCategories = useMemo(() => {
@@ -75,13 +76,6 @@ export const App: React.FC = () => {
     });
   }, [searchQuery, activeFilter]);
 
-  const handleShareUrl = () => {
-    const url = generateShareableUrl();
-    navigator.clipboard.writeText(url);
-    setCopiedUrl(true);
-    setTimeout(() => setCopiedUrl(false), 2000);
-  };
-
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans">
       {/* Navbar */}
@@ -90,10 +84,9 @@ export const App: React.FC = () => {
         activeCategoriesCount={metrics.activeCategoriesCount}
         totalCategoriesCount={CATEGORIES.length}
         onOpenExport={() => setIsExportOpen(true)}
+        onOpenShare={() => setIsShareOpen(true)}
         onApplyPreset={applyPreset}
         onReset={resetPack}
-        onShareUrl={handleShareUrl}
-        copiedUrl={copiedUrl}
       />
 
       {/* Minimal Header */}
@@ -180,6 +173,20 @@ export const App: React.FC = () => {
         onCustomTitleChange={setCustomTitle}
         sovereigntyScore={metrics.sovereigntyPercentage}
         evictedCount={metrics.evictedParents.length}
+      />
+
+      {/* Social & Link Share Modal */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        selections={selections}
+        theme={theme}
+        aspectRatio={aspectRatio}
+        userName={userName}
+        customTitle={customTitle}
+        sovereigntyScore={metrics.sovereigntyPercentage}
+        evictedCount={metrics.evictedParents.length}
+        shareUrl={generateShareableUrl()}
       />
     </div>
   );

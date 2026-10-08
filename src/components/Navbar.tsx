@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Download, RotateCcw, Check, Link } from 'lucide-react';
+import { Shield, Download, RotateCcw, Share2 } from 'lucide-react';
 import { PRESET_STACKS } from '../data/presets';
 
 interface NavbarProps {
@@ -7,10 +7,9 @@ interface NavbarProps {
   activeCategoriesCount: number;
   totalCategoriesCount: number;
   onOpenExport: () => void;
+  onOpenShare: () => void;
   onApplyPreset: (presetId: string) => void;
   onReset: () => void;
-  onShareUrl: () => void;
-  copiedUrl: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -18,10 +17,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeCategoriesCount,
   totalCategoriesCount,
   onOpenExport,
+  onOpenShare,
   onApplyPreset,
   onReset,
-  onShareUrl,
-  copiedUrl,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090b]/95 backdrop-blur-md">
@@ -65,17 +63,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Share Link */}
+          {/* Share Button (opens ShareModal) */}
           <button
-            onClick={onShareUrl}
-            title="Copy shareable link"
+            onClick={onOpenShare}
+            title="Share your stack on social networks or copy link"
             className="flex items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
           >
-            {copiedUrl ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Link className="h-3.5 w-3.5" />}
-            <span className="hidden sm:inline">{copiedUrl ? 'Copied' : 'Share'}</span>
+            <Share2 className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Share</span>
           </button>
 
-          {/* Reset */}
+          {/* Reset Button */}
           <button
             onClick={onReset}
             title="Reset stack"
