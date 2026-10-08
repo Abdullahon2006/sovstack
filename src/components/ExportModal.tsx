@@ -24,10 +24,11 @@ interface ExportModalProps {
 }
 
 const THEME_OPTIONS: { id: CardTheme; name: string }[] = [
-  { id: 'eink', name: 'Monochrome (Clean White)' },
   { id: 'matrix', name: 'Dark Charcoal' },
-  { id: 'terminal', name: 'Terminal Monospace' },
-  { id: 'titanium', name: 'Titanium Dark' },
+  { id: 'eink', name: 'Clean White' },
+  { id: 'titanium', name: 'Titanium Slate' },
+  { id: 'terminal', name: 'Terminal Green' },
+  { id: 'emerald', name: 'Emerald Forest' },
 ];
 
 const ASPECT_OPTIONS: { id: CardAspectRatio; name: string }[] = [

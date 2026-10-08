@@ -28,4 +28,6 @@ lerna-debug.log*
 # User home configs
 .bash*
 .config/
-
+sharedDavid/
+.agents/
+skills-lock.json

@@ -72,7 +72,7 @@ export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
       </div>
 
       {/* Main Row: Mainstream -> Arrow -> Alternatives */}
-      <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-12 sm:items-center">
+      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-12 sm:items-center">
         {/* Left: Mainstream Service */}
         <div className="flex items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 sm:col-span-5">
           <div className="shrink-0">
@@ -98,53 +98,68 @@ export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
           <button
             onClick={() => onInspectMainstream(activeMainstream)}
             title="View surveillance dossier"
-            className="text-zinc-500 hover:text-zinc-300 p-0.5 shrink-0"
+            className="text-zinc-500 hover:text-zinc-300 p-1 shrink-0 rounded hover:bg-zinc-800 transition"
           >
             <Info className="h-3.5 w-3.5" />
           </button>
         </div>
 
-        {/* Center: Subtle Migration Arrow */}
-        <div className="flex items-center justify-center sm:col-span-2">
+        {/* Center: Migration Flow Indicator */}
+        <div className="flex items-center justify-center sm:col-span-2 py-0.5 sm:py-0">
           <ArrowRight className="h-3.5 w-3.5 text-zinc-600 hidden sm:block" />
+          <div className="flex items-center gap-1 text-[10px] uppercase font-semibold tracking-wider text-zinc-500 sm:hidden">
+            <span>switched to ↓</span>
+          </div>
         </div>
 
         {/* Right: Private Alternatives */}
-        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/40 p-2 sm:col-span-5 min-h-[40px]">
-          {selectedAlternatives.map((alt) => (
-            <span
-              key={alt.id}
-              className="inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-100"
+        <div className="sm:col-span-5">
+          {!hasSelections ? (
+            <button
+              onClick={() => setIsPickerOpen(true)}
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-zinc-800 bg-zinc-900/30 py-2 px-3 text-xs font-medium text-zinc-400 transition hover:border-zinc-600 hover:bg-zinc-800/40 hover:text-zinc-200"
             >
-              <AppIcon appId={alt.id} name={alt.name} size={14} />
-              <span>{alt.name}</span>
-              <a
-                href={alt.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Website"
-                className="text-zinc-400 hover:text-white"
-              >
-                <ExternalLink className="h-2.5 w-2.5" />
-              </a>
-              <button
-                onClick={() => onToggleAlternative(alt.id)}
-                title="Remove"
-                className="text-zinc-400 hover:text-zinc-200"
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </span>
-          ))}
+              <Plus className="h-3.5 w-3.5 text-zinc-400" />
+              <span>Choose privacy alternative...</span>
+            </button>
+          ) : (
+            <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/40 p-2 min-h-[40px]">
+              {selectedAlternatives.map((alt) => (
+                <span
+                  key={alt.id}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-100"
+                >
+                  <AppIcon appId={alt.id} name={alt.name} size={14} />
+                  <span>{alt.name}</span>
+                  <a
+                    href={alt.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Website"
+                    className="text-zinc-400 hover:text-white p-0.5"
+                  >
+                    <ExternalLink className="h-2.5 w-2.5" />
+                  </a>
+                  <button
+                    onClick={() => onToggleAlternative(alt.id)}
+                    title="Remove"
+                    className="text-zinc-400 hover:text-zinc-200 p-0.5 rounded hover:bg-zinc-700 transition"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              ))}
 
-          {/* Add / Pick Alternative Trigger */}
-          <button
-            onClick={() => setIsPickerOpen(true)}
-            className="inline-flex items-center gap-1 rounded-md border border-zinc-700/80 bg-zinc-800/80 px-2 py-1 text-xs font-medium text-zinc-300 transition hover:bg-zinc-700 hover:text-white"
-          >
-            <Plus className="h-3 w-3" />
-            <span>{hasSelections ? 'Add' : 'Pick'}</span>
-          </button>
+              {/* Add More Alternatives Trigger */}
+              <button
+                onClick={() => setIsPickerOpen(true)}
+                className="inline-flex items-center gap-1 rounded-md border border-zinc-700/80 bg-zinc-800/80 px-2 py-1 text-xs font-medium text-zinc-300 transition hover:bg-zinc-700 hover:text-white"
+              >
+                <Plus className="h-3 w-3" />
+                <span>Add</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
