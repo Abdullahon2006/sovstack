@@ -27,6 +27,7 @@ interface ShareModalProps {
   sovereigntyScore: number;
   evictedCount: number;
   shareUrl: string;
+  customAlternatives?: Record<string, import('../data/types').PrivacyAlternative[]>;
 }
 
 export const ShareModal: React.FC<ShareModalProps> = ({
@@ -40,6 +41,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   sovereigntyScore,
   evictedCount,
   shareUrl,
+  customAlternatives,
 }) => {
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
@@ -60,6 +62,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           customTitle,
           sovereigntyScore,
           evictedCount,
+          customAlternatives,
         });
         if (isMounted) {
           canvasRef.current = canvas;
@@ -75,7 +78,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [isOpen, selections, theme, aspectRatio, userName, customTitle, sovereigntyScore, evictedCount]);
+  }, [isOpen, selections, theme, aspectRatio, userName, customTitle, sovereigntyScore, evictedCount, customAlternatives]);
 
   if (!isOpen) return null;
 
@@ -96,6 +99,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
       customTitle,
       sovereigntyScore,
       evictedCount,
+      customAlternatives,
     });
     if (success) {
       setCopiedImage(true);

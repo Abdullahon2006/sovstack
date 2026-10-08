@@ -1,0 +1,29 @@
+# DeGigamon robots.txt - Fully crawlable for Search Engines & AI Indexers
+User-agent: *
+Allow: /
+
+# Explicitly invite modern AI search crawlers & LLM indexers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemaps & LLM Documentation Standards
+Sitemap: https://degigamon.org/sitemap.xml
+llms-txt: https://degigamon.org/llms.txt

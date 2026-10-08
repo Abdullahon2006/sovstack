@@ -21,6 +21,7 @@ interface ExportModalProps {
   onCustomTitleChange: (title: string) => void;
   sovereigntyScore: number;
   evictedCount: number;
+  customAlternatives?: Record<string, import('../data/types').PrivacyAlternative[]>;
 }
 
 const THEME_OPTIONS: { id: CardTheme; name: string }[] = [
@@ -51,6 +52,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   onCustomTitleChange,
   sovereigntyScore,
   evictedCount,
+  customAlternatives,
 }) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [copiedImage, setCopiedImage] = useState(false);
@@ -73,6 +75,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           customTitle,
           sovereigntyScore,
           evictedCount,
+          customAlternatives,
         });
 
         if (isMounted) {
@@ -91,7 +94,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [isOpen, selections, theme, aspectRatio, userName, customTitle, sovereigntyScore, evictedCount]);
+  }, [isOpen, selections, theme, aspectRatio, userName, customTitle, sovereigntyScore, evictedCount, customAlternatives]);
 
   if (!isOpen) return null;
 
@@ -105,6 +108,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         customTitle,
         sovereigntyScore,
         evictedCount,
+        customAlternatives,
       },
       `privacy-pack-${(userName || 'stack').toLowerCase().replace(/\s+/g, '-')}.png`
     );
@@ -119,6 +123,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       customTitle,
       sovereigntyScore,
       evictedCount,
+      customAlternatives,
     });
     if (success) {
       setCopiedImage(true);

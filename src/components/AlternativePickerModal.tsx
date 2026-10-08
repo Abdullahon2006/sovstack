@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Search, Check, ExternalLink } from 'lucide-react';
+import { X, Search, Check, ExternalLink, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Category, PrivacyAlternative, PrivacyBadge } from '../data/types';
 import { AppIcon } from './AppIcon';
 
@@ -9,6 +9,12 @@ interface AlternativePickerModalProps {
   category: Category;
   selectedAlternativeIds: string[];
   onToggleAlternative: (alternativeId: string) => void;
+  customAlternatives?: PrivacyAlternative[];
+  onAddCustomAlternative?: (
+    categoryId: string,
+    altData: Omit<PrivacyAlternative, 'id' | 'isCustom'>
+  ) => void;
+  onDeleteCustomAlternative?: (categoryId: string, altId: string) => void;
 }
 
 const BADGE_FILTER_OPTIONS: PrivacyBadge[] = [
@@ -16,6 +22,8 @@ const BADGE_FILTER_OPTIONS: PrivacyBadge[] = [
   'E2EE',
   'Self-Hostable',
   'Zero-Knowledge',
+  'Audited',
+  'Local-Only',
 ];
 
 export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
@@ -24,9 +32,20 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
   category,
   selectedAlternativeIds,
   onToggleAlternative,
+  customAlternatives = [],
+  onAddCustomAlternative,
+  onDeleteCustomAlternative,
 }) => {
   const [query, setQuery] = useState('');
   const [badgeFilter, setBadgeFilter] = useState<PrivacyBadge | null>(null);
+  const [isAddingCustom, setIsAddingCustom] = useState(false);
+
+  // Custom alternative form state
+  const [customName, setCustomName] = useState('');
+  const [customWebsite, setCustomWebsite] = useState('');
+  const [customDesc, setCustomDesc] = useState('');
+  const [customBadges, setCustomBadges] = useState<PrivacyBadge[]>(['FOSS']);
+
   const modalRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -35,6 +54,11 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
     if (isOpen) {
       setQuery('');
       setBadgeFilter(null);
+      setIsAddingCustom(false);
+      setCustomName('');
+      setCustomWebsite('');
+      setCustomDesc('');
+      setCustomBadges(['FOSS']);
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);
@@ -64,7 +88,13 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
 
   if (!isOpen) return null;
 
-  const filteredAlternatives = category.alternatives.filter((alt) => {
+  // Combine built-in alternatives with user's custom alternatives for this category
+  const allAlternatives: PrivacyAlternative[] = [
+    ...category.alternatives,
+    ...customAlternatives,
+  ];
+
+  const filteredAlternatives = allAlternatives.filter((alt) => {
     if (query.trim()) {
       const q = query.toLowerCase();
       const matchName = alt.name.toLowerCase().includes(q);
@@ -78,6 +108,36 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
 
     return true;
   });
+
+  const handleToggleBadge = (badge: PrivacyBadge) => {
+    setCustomBadges((prev) =>
+      prev.includes(badge) ? prev.filter((b) => b !== badge) : [...prev, badge]
+    );
+  };
+
+  const handleSaveCustom = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customName.trim() || !onAddCustomAlternative) return;
+
+    let formattedUrl = customWebsite.trim();
+    if (formattedUrl && !/^https?:\/\//i.test(formattedUrl)) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+
+    onAddCustomAlternative(category.id, {
+      name: customName.trim(),
+      website: formattedUrl || '#',
+      description: customDesc.trim() || 'Custom private alternative added by user.',
+      badges: customBadges.length > 0 ? customBadges : ['FOSS'],
+    });
+
+    // Reset and collapse form
+    setCustomName('');
+    setCustomWebsite('');
+    setCustomDesc('');
+    setCustomBadges(['FOSS']);
+    setIsAddingCustom(false);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
@@ -113,7 +173,7 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={`Search ${category.alternatives.length} private alternatives...`}
+              placeholder={`Search ${allAlternatives.length} private alternatives...`}
               className="w-full rounded-lg border border-zinc-800 bg-zinc-950 py-1.5 pl-8 pr-7 text-xs text-zinc-200 placeholder-zinc-500 transition focus:border-zinc-500 focus:outline-none"
             />
             {query && (
@@ -126,31 +186,129 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-1 overflow-x-auto text-[11px]">
-            <button
-              onClick={() => setBadgeFilter(null)}
-              className={`rounded px-2 py-0.5 font-medium transition ${
-                badgeFilter === null
-                  ? 'bg-zinc-200 text-black font-semibold'
-                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
-              }`}
-            >
-              All
-            </button>
-            {BADGE_FILTER_OPTIONS.map((badge) => (
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-1 overflow-x-auto text-[11px] py-0.5">
               <button
-                key={badge}
-                onClick={() => setBadgeFilter(badgeFilter === badge ? null : badge)}
+                onClick={() => setBadgeFilter(null)}
                 className={`rounded px-2 py-0.5 font-medium transition ${
-                  badgeFilter === badge
+                  badgeFilter === null
                     ? 'bg-zinc-200 text-black font-semibold'
                     : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
                 }`}
               >
-                {badge}
+                All
               </button>
-            ))}
+              {BADGE_FILTER_OPTIONS.map((badge) => (
+                <button
+                  key={badge}
+                  onClick={() => setBadgeFilter(badgeFilter === badge ? null : badge)}
+                  className={`rounded px-2 py-0.5 font-medium transition ${
+                    badgeFilter === badge
+                      ? 'bg-zinc-200 text-black font-semibold'
+                      : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                  }`}
+                >
+                  {badge}
+                </button>
+              ))}
+            </div>
+
+            {/* Toggle Add Custom Alternative Form */}
+            {onAddCustomAlternative && (
+              <button
+                onClick={() => setIsAddingCustom(!isAddingCustom)}
+                className="flex items-center gap-1 rounded bg-zinc-800 hover:bg-zinc-700 px-2 py-1 text-[11px] font-semibold text-emerald-400 shrink-0 transition"
+              >
+                <Plus className="h-3 w-3" />
+                <span>Custom</span>
+                {isAddingCustom ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+              </button>
+            )}
           </div>
+
+          {/* Expandable Add Custom Alternative Form */}
+          {isAddingCustom && (
+            <form onSubmit={handleSaveCustom} className="mt-2 rounded-lg border border-zinc-700 bg-zinc-950 p-3 text-xs space-y-2.5 animate-in slide-in-from-top-2 duration-150">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-white">Add Custom Alternative</span>
+                <span className="text-[10px] text-zinc-400">Stored locally in your stack</span>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-medium text-zinc-400">Tool / Service Name *</label>
+                <input
+                  type="text"
+                  required
+                  value={customName}
+                  onChange={(e) => setCustomName(e.target.value)}
+                  placeholder="e.g. K-9 Mail, Seafile, Radicale..."
+                  className="mt-1 w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-medium text-zinc-400">Website or Repository URL (optional)</label>
+                <input
+                  type="text"
+                  value={customWebsite}
+                  onChange={(e) => setCustomWebsite(e.target.value)}
+                  placeholder="e.g. https://k9mail.app"
+                  className="mt-1 w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-medium text-zinc-400 mb-1">Trust Badges</label>
+                <div className="flex flex-wrap gap-1">
+                  {BADGE_FILTER_OPTIONS.map((badge) => {
+                    const active = customBadges.includes(badge);
+                    return (
+                      <button
+                        type="button"
+                        key={badge}
+                        onClick={() => handleToggleBadge(badge)}
+                        className={`rounded px-1.5 py-0.5 text-[10px] font-medium transition ${
+                          active
+                            ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50'
+                            : 'bg-zinc-800 text-zinc-400 border border-zinc-700 hover:text-zinc-200'
+                        }`}
+                      >
+                        {badge}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-medium text-zinc-400">Description (optional)</label>
+                <input
+                  type="text"
+                  value={customDesc}
+                  onChange={(e) => setCustomDesc(e.target.value)}
+                  placeholder="e.g. Open-source client with PGP support"
+                  className="mt-1 w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs text-white focus:border-zinc-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsAddingCustom(false)}
+                  className="rounded px-2.5 py-1 text-[11px] font-medium text-zinc-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!customName.trim()}
+                  className="rounded bg-emerald-500 px-3 py-1 text-[11px] font-semibold text-black hover:bg-emerald-400 disabled:opacity-50"
+                >
+                  Save & Select
+                </button>
+              </div>
+            </form>
+          )}
         </div>
 
         {/* Alternatives List */}
@@ -184,16 +342,23 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                         <span className="text-xs font-semibold text-white truncate">
                           {alt.name}
                         </span>
-                        <a
-                          href={alt.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          title="Visit official website"
-                          className="text-zinc-500 hover:text-zinc-200"
-                        >
-                          <ExternalLink className="h-2.5 w-2.5" />
-                        </a>
+                        {alt.isCustom && (
+                          <span className="rounded bg-emerald-950/80 px-1 py-0.2 text-[9px] font-semibold text-emerald-400 border border-emerald-800">
+                            Custom
+                          </span>
+                        )}
+                        {alt.website && alt.website !== '#' && (
+                          <a
+                            href={alt.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            title="Visit official website"
+                            className="text-zinc-500 hover:text-zinc-200"
+                          >
+                            <ExternalLink className="h-2.5 w-2.5" />
+                          </a>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-1">
@@ -205,6 +370,21 @@ export const AlternativePickerModal: React.FC<AlternativePickerModalProps> = ({
                             {b}
                           </span>
                         ))}
+
+                        {/* Delete custom alternative button */}
+                        {alt.isCustom && onDeleteCustomAlternative && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onDeleteCustomAlternative(category.id, alt.id);
+                            }}
+                            title="Delete custom alternative"
+                            className="text-zinc-500 hover:text-red-400 p-1 rounded"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        )}
                       </div>
                     </div>
 

@@ -54,7 +54,10 @@ export interface PrivacyAlternative {
   jurisdiction?: string;
   symbol?: string;
   recommended?: boolean;
+  isCustom?: boolean;
 }
+
+export type ActivePage = 'builder' | 'dossiers' | 'alternatives' | 'about' | 'faq' | 'privacy';
 
 export interface Category {
   id: string;

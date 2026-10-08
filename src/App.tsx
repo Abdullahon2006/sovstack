@@ -8,10 +8,21 @@ import { CategoryPickerCard } from './components/CategoryPickerCard';
 import { GigamonDossierModal } from './components/GigamonDossierModal';
 import { ExportModal } from './components/ExportModal';
 import { ShareModal } from './components/ShareModal';
+import { DossiersPage } from './components/pages/DossiersPage';
+import { AlternativesPage } from './components/pages/AlternativesPage';
+import { AboutPage } from './components/pages/AboutPage';
+import { FaqPage } from './components/pages/FaqPage';
+import { PrivacyPage } from './components/pages/PrivacyPage';
+import { ShieldCheck, Heart } from 'lucide-react';
 
 export const App: React.FC = () => {
   const {
+    activePage,
+    setActivePage,
     selections,
+    customAlternatives,
+    addCustomAlternative,
+    deleteCustomAlternative,
     theme,
     setTheme,
     aspectRatio,
@@ -51,11 +62,18 @@ export const App: React.FC = () => {
             m.name.toLowerCase().includes(query) ||
             m.parent.toLowerCase().includes(query)
         );
-        const matchesAlternatives = category.alternatives.some(
-          (a) =>
-            a.name.toLowerCase().includes(query) ||
-            a.description.toLowerCase().includes(query)
-        );
+        const customList = customAlternatives[category.id] || [];
+        const matchesAlternatives =
+          category.alternatives.some(
+            (a) =>
+              a.name.toLowerCase().includes(query) ||
+              a.description.toLowerCase().includes(query)
+          ) ||
+          customList.some(
+            (a) =>
+              a.name.toLowerCase().includes(query) ||
+              a.description.toLowerCase().includes(query)
+          );
 
         if (!matchesCategory && !matchesMainstream && !matchesAlternatives) {
           return false;
@@ -64,9 +82,14 @@ export const App: React.FC = () => {
 
       // 2. Active Badge filter
       if (activeFilter) {
-        const hasMatchingAlternative = category.alternatives.some((alt) =>
-          alt.badges.includes(activeFilter as any)
-        );
+        const customList = customAlternatives[category.id] || [];
+        const hasMatchingAlternative =
+          category.alternatives.some((alt) =>
+            alt.badges.includes(activeFilter as any)
+          ) ||
+          customList.some((alt) =>
+            alt.badges.includes(activeFilter as any)
+          );
         if (!hasMatchingAlternative) {
           return false;
         }
@@ -74,12 +97,14 @@ export const App: React.FC = () => {
 
       return true;
     });
-  }, [searchQuery, activeFilter]);
+  }, [searchQuery, activeFilter, customAlternatives]);
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans">
-      {/* Navbar */}
+      {/* Navbar with page routing */}
       <Navbar
+        activePage={activePage}
+        onNavigate={setActivePage}
         sovereigntyScore={metrics.sovereigntyPercentage}
         activeCategoriesCount={metrics.activeCategoriesCount}
         totalCategoriesCount={CATEGORIES.length}
@@ -89,67 +114,154 @@ export const App: React.FC = () => {
         onReset={resetPack}
       />
 
-      {/* Minimal Header */}
-      <SovereigntyHeader
-        sovereigntyScore={metrics.sovereigntyPercentage}
-        activeCategoriesCount={metrics.activeCategoriesCount}
-        totalCategoriesCount={CATEGORIES.length}
-        evictedCount={metrics.evictedParents.length}
-        neutralizedVectorsCount={metrics.neutralizedVectorsCount}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
+      {/* Main Content Area Driven by activePage */}
+      <div className="flex-1">
+        {activePage === 'builder' && (
+          <>
+            {/* Minimal Header */}
+            <SovereigntyHeader
+              sovereigntyScore={metrics.sovereigntyPercentage}
+              activeCategoriesCount={metrics.activeCategoriesCount}
+              totalCategoriesCount={CATEGORIES.length}
+              evictedCount={metrics.evictedParents.length}
+              neutralizedVectorsCount={metrics.neutralizedVectorsCount}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              activeFilter={activeFilter}
+              onFilterChange={setActiveFilter}
+            />
 
-      {/* Main Content Area */}
-      <main className="mx-auto max-w-5xl flex-1 px-4 py-6 sm:px-6 w-full space-y-4">
-        {filteredCategories.length === 0 ? (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-10 text-center">
-            <p className="text-xs text-zinc-400">No categories match your search.</p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setActiveFilter(null);
-              }}
-              className="mt-3 rounded-lg bg-zinc-800 px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-700"
-            >
-              Clear filters
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {filteredCategories.map((category) => (
-              <CategoryPickerCard
-                key={category.id}
-                category={category}
-                selectedMainstreamId={selections[category.id]?.mainstreamId}
-                selectedAlternativeIds={selections[category.id]?.alternativeIds || []}
-                onSelectMainstream={(mainstreamId) => selectMainstream(category.id, mainstreamId)}
-                onToggleAlternative={(altId) => toggleAlternative(category.id, altId)}
-                onRemoveCategory={() => removeCategory(category.id)}
-                onInspectMainstream={(app) => setInspectedMainstream(app)}
-              />
-            ))}
-          </div>
+            {/* Category Cards List */}
+            <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 w-full space-y-4">
+              {filteredCategories.length === 0 ? (
+                <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-10 text-center">
+                  <p className="text-xs text-zinc-400">No categories match your search.</p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setActiveFilter(null);
+                    }}
+                    className="mt-3 rounded-lg bg-zinc-800 px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-700"
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {filteredCategories.map((category) => (
+                    <CategoryPickerCard
+                      key={category.id}
+                      category={category}
+                      selectedMainstreamId={selections[category.id]?.mainstreamId}
+                      selectedAlternativeIds={selections[category.id]?.alternativeIds || []}
+                      onSelectMainstream={(mainstreamId) => selectMainstream(category.id, mainstreamId)}
+                      onToggleAlternative={(altId) => toggleAlternative(category.id, altId)}
+                      onRemoveCategory={() => removeCategory(category.id)}
+                      onInspectMainstream={(app) => setInspectedMainstream(app)}
+                      customAlternatives={customAlternatives[category.id]}
+                      onAddCustomAlternative={addCustomAlternative}
+                      onDeleteCustomAlternative={deleteCustomAlternative}
+                    />
+                  ))}
+                </div>
+              )}
+            </main>
+          </>
         )}
-      </main>
 
-      {/* Minimal Footer */}
-      <footer className="mt-16 border-t border-zinc-800/80 bg-[#0c0c0e] px-4 py-8 sm:px-6 text-center text-xs text-zinc-500">
-        <p className="font-medium text-zinc-400">DeGigamon</p>
-        <p className="mt-1 text-[11px] text-zinc-600">
-          Open-source alternative to{' '}
-          <a
-            href="https://privacypack.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-zinc-400 underline hover:text-white"
-          >
-            PrivacyPack.org
-          </a>{' '}
-          · 100% Client-Side · Zero Telemetry · MIT License
-        </p>
+        {activePage === 'dossiers' && <DossiersPage />}
+
+        {activePage === 'alternatives' && (
+          <AlternativesPage
+            onSelectAlternativeForCategory={toggleAlternative}
+            onNavigateToBuilder={() => setActivePage('builder')}
+          />
+        )}
+
+        {activePage === 'about' && (
+          <AboutPage onNavigateToBuilder={() => setActivePage('builder')} />
+        )}
+
+        {activePage === 'faq' && <FaqPage />}
+
+        {activePage === 'privacy' && <PrivacyPage />}
+      </div>
+
+      {/* Comprehensive Publishable Footer */}
+      <footer className="mt-16 border-t border-zinc-800/80 bg-[#0c0c0e] px-4 py-10 sm:px-6 text-xs text-zinc-400">
+        <div className="mx-auto max-w-5xl space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-800/60 pb-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-white">DeGigamon</span>
+                <span className="rounded bg-emerald-950/80 px-1.5 py-0.5 text-[10px] font-medium text-emerald-400 border border-emerald-800/60">
+                  Open Source
+                </span>
+              </div>
+              <p className="text-[11px] text-zinc-500">
+                The client-side alternative to PrivacyPack.org · Reclaim your digital sovereignty.
+              </p>
+            </div>
+
+            {/* Quick Navigation Links */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+              <button
+                onClick={() => setActivePage('builder')}
+                className="hover:text-white transition"
+              >
+                Pack Builder
+              </button>
+              <button
+                onClick={() => setActivePage('dossiers')}
+                className="hover:text-white transition"
+              >
+                Surveillance Dossiers
+              </button>
+              <button
+                onClick={() => setActivePage('alternatives')}
+                className="hover:text-white transition"
+              >
+                Privacy Tools
+              </button>
+              <button
+                onClick={() => setActivePage('about')}
+                className="hover:text-white transition"
+              >
+                Manifesto
+              </button>
+              <button
+                onClick={() => setActivePage('faq')}
+                className="hover:text-white transition"
+              >
+                FAQ & Migration
+              </button>
+              <button
+                onClick={() => setActivePage('privacy')}
+                className="hover:text-white transition"
+              >
+                Zero-Telemetry Privacy
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-[11px] text-zinc-500">
+            <p>
+              100% Client-Side · Zero Cookies · Zero Tracking · MIT License
+            </p>
+            <p className="flex items-center gap-1">
+              <span>Verified for</span>
+              <a
+                href="https://privacypack.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-400 underline hover:text-white"
+              >
+                PrivacyPack
+              </a>
+              <span>standard compatibility</span>
+            </p>
+          </div>
+        </div>
       </footer>
 
       {/* Dossier Modal */}
@@ -173,6 +285,7 @@ export const App: React.FC = () => {
         onCustomTitleChange={setCustomTitle}
         sovereigntyScore={metrics.sovereigntyPercentage}
         evictedCount={metrics.evictedParents.length}
+        customAlternatives={customAlternatives}
       />
 
       {/* Social & Link Share Modal */}
@@ -187,6 +300,7 @@ export const App: React.FC = () => {
         sovereigntyScore={metrics.sovereigntyPercentage}
         evictedCount={metrics.evictedParents.length}
         shareUrl={generateShareableUrl()}
+        customAlternatives={customAlternatives}
       />
     </div>
   );

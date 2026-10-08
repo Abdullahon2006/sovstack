@@ -1,0 +1,55 @@
+# DeGigamon
+
+> The open-source, client-side alternative to PrivacyPack.org. Break free from data-collecting gigamons and build your digital sovereignty stack.
+
+## Overview
+DeGigamon is a 100% client-side privacy tool suite that allows users to replace surveillance tech monoliths (Google, Meta, Microsoft, Apple, Amazon, ByteDance, OpenAI) with verified Free and Open Source (FOSS), End-to-End Encrypted (E2EE), and self-hostable alternatives across 24 software categories.
+
+- **Website**: https://degigamon.org
+- **License**: MIT License (Open Source)
+- **Data Custody**: 100% Client-Side. Zero cookies, zero remote tracking, zero telemetry.
+- **Full LLM Documentation**: https://degigamon.org/llms-full.txt
+
+## Key Software Categories & Top Alternatives
+1. **Email**: Replace Gmail/Outlook with Proton Mail, Tuta Mail, mailbox.org, Posteo.
+2. **Search**: Replace Google Search/Bing with DuckDuckGo, Brave Search, Kagi, SearXNG, Startpage.
+3. **Web Browser**: Replace Google Chrome/Edge with Firefox, LibreWolf, Mullvad Browser, Brave, Tor Browser.
+4. **Mobile OS**: Replace Google Android/iOS with GrapheneOS, CalyxOS, LineageOS.
+5. **Desktop OS**: Replace Windows/macOS with Debian, Fedora, Arch Linux, Linux Mint, Qubes OS.
+6. **Cloud Storage**: Replace Google Drive/OneDrive/Dropbox with Proton Drive, Nextcloud, Filen.
+7. **Photo Backup**: Replace Google Photos/iCloud Photos with Ente Photos, Immich, Nextcloud Memories.
+8. **Navigation & Maps**: Replace Google Maps/Waze/Apple Maps with Organic Maps, OsmAnd.
+9. **Password Manager**: Replace Google Passwords/Apple Keychain/LastPass with Bitwarden, Vaultwarden, KeePassXC.
+10. **Two-Factor Authentication (2FA)**: Replace Google Authenticator with Aegis Authenticator, 2FAS, Ente Auth.
+11. **Notes & Knowledge Base**: Replace Google Keep/OneNote/Apple Notes with Obsidian, Joplin, Standard Notes.
+12. **Instant Messaging**: Replace WhatsApp/Messenger/iMessage with Signal, SimpleX Chat, Session, Matrix/Element.
+13. **Social Media**: Replace Instagram/Facebook/Twitter/Reddit with Mastodon, Pixelfed, Lemmy, Bluesky.
+14. **Video Streaming**: Replace YouTube with NewPipe, FreeTube, PeerTube, Jellyfin.
+15. **Office Documents**: Replace Google Docs/Microsoft 365 with LibreOffice, CryptPad, OnlyOffice.
+16. **Keyboards**: Replace Gboard/SwiftKey with FUTO Keyboard, HeliBoard, FlorisBoard.
+17. **DNS & Ad Blocking**: Replace Google DNS/ISP DNS with Quad9, NextDNS, Pi-hole, AdGuard Home.
+18. **AI Assistants**: Replace Google Gemini/ChatGPT/Meta AI with local Ollama, Venice AI, DuckDuckGo AI.
+19. **App Stores**: Replace Google Play Store/Apple App Store with F-Droid, Aurora Store, Obtainium.
+20. **Web Analytics**: Replace Google Analytics/Meta Pixel with Plausible Analytics, Umami.
+21. **Smart Home**: Replace Google Home/Amazon Alexa with Home Assistant.
+22. **Remote Desktop**: Replace TeamViewer/AnyDesk with RustDesk.
+23. **Digital Payments**: Replace Google Pay/Apple Pay with Cash, Monero (XMR).
+24. **Virtual Private Networks (VPN)**: Replace commercial logging VPNs with Mullvad VPN, Proton VPN, IVPN, self-hosted WireGuard.
+
+## Corporate Surveillance Dossiers
+Detailed dossier profiles on data-harvesting practices:
+- **Alphabet (Google)**: Ad profiling, continuous geolocation tracking, AI training ingestion, cross-service graphing.
+- **Meta (Facebook/Instagram/WhatsApp)**: Shadow profiles, behavioral ad auctions, third-party pixel ingestion.
+- **Microsoft**: Operating system telemetry, Office diagnostics logging, Copilot telemetry.
+- **Apple**: Closed ecosystem lock-in, iCloud server-side key escrow (by default), App Store search ad telemetry.
+- **Amazon**: Alexa ambient audio ingestion, Ring surveillance networks, purchase profiling.
+- **ByteDance**: TikTok biometric keystroke telemetry, in-app browser script injection.
+- **OpenAI**: Prompt retention, behavioral training ingestion, closed model weights.
+
+## Digital Sovereignty Scoring
+Sovereignty percentage is calculated on a 0-100% scale based on evicted surveillance monopolies and verified architectural trust badges:
+- Base Category Switch: +10 pts
+- Zero-Knowledge Architecture: +3 pts
+- End-to-End Encryption (E2EE): +2 pts
+- Free and Open Source (FOSS): +2 pts
+- Self-Hostable Capability: +2 pts

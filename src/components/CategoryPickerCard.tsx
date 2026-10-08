@@ -7,7 +7,7 @@ import {
   ExternalLink,
   Trash2,
 } from 'lucide-react';
-import { Category, MainstreamApp } from '../data/types';
+import { Category, MainstreamApp, PrivacyAlternative } from '../data/types';
 import { AppIcon } from './AppIcon';
 import { AlternativePickerModal } from './AlternativePickerModal';
 
@@ -19,6 +19,12 @@ interface CategoryPickerCardProps {
   onToggleAlternative: (alternativeId: string) => void;
   onRemoveCategory: () => void;
   onInspectMainstream: (app: MainstreamApp) => void;
+  customAlternatives?: PrivacyAlternative[];
+  onAddCustomAlternative?: (
+    categoryId: string,
+    altData: Omit<PrivacyAlternative, 'id' | 'isCustom'>
+  ) => void;
+  onDeleteCustomAlternative?: (categoryId: string, altId: string) => void;
 }
 
 export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
@@ -29,6 +35,9 @@ export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
   onToggleAlternative,
   onRemoveCategory,
   onInspectMainstream,
+  customAlternatives = [],
+  onAddCustomAlternative,
+  onDeleteCustomAlternative,
 }) => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -36,7 +45,12 @@ export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
     category.mainstreamApps.find((m) => m.id === selectedMainstreamId) ||
     category.mainstreamApps[0];
 
-  const selectedAlternatives = category.alternatives.filter((alt) =>
+  const allAlternatives = [
+    ...category.alternatives,
+    ...customAlternatives,
+  ];
+
+  const selectedAlternatives = allAlternatives.filter((alt) =>
     selectedAlternativeIds.includes(alt.id)
   );
 
@@ -170,6 +184,9 @@ export const CategoryPickerCard: React.FC<CategoryPickerCardProps> = ({
         category={category}
         selectedAlternativeIds={selectedAlternativeIds}
         onToggleAlternative={onToggleAlternative}
+        customAlternatives={customAlternatives}
+        onAddCustomAlternative={onAddCustomAlternative}
+        onDeleteCustomAlternative={onDeleteCustomAlternative}
       />
     </div>
   );

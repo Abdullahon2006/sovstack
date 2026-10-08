@@ -1,5 +1,6 @@
 import { CATEGORIES } from '../data/catalog';
-import { CardTheme, CardAspectRatio, PackSelection } from '../data/types';
+import { CardTheme, CardAspectRatio, PackSelection, PrivacyAlternative } from '../data/types';
+import { getAppSvgString } from './iconSvgs';
 
 interface RenderOptions {
   selections: PackSelection;
@@ -9,6 +10,37 @@ interface RenderOptions {
   customTitle: string;
   sovereigntyScore: number;
   evictedCount: number;
+  customAlternatives?: Record<string, PrivacyAlternative[]>;
+}
+
+const svgImageCache = new Map<string, HTMLImageElement>();
+
+async function preloadAppIcons(appIds: string[]): Promise<void> {
+  if (typeof window === 'undefined' || typeof Image === 'undefined') return;
+
+  const promises = appIds.map((id) => {
+    if (svgImageCache.has(id)) return Promise.resolve();
+    const svg = getAppSvgString(id);
+    if (!svg) return Promise.resolve();
+
+    return new Promise<void>((resolve) => {
+      const img = new Image();
+      const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      img.onload = () => {
+        svgImageCache.set(id, img);
+        URL.revokeObjectURL(url);
+        resolve();
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve();
+      };
+      img.src = url;
+    });
+  });
+
+  await Promise.all(promises);
 }
 
 interface ThemeConfig {
@@ -269,7 +301,7 @@ function truncateText(ctx: CanvasRenderingContext2D, text: string, maxWidth: num
   return text.slice(0, len) + '…';
 }
 
-// Draw a crisp app icon squircle with brand background and monogram
+// Draw a crisp app icon squircle with brand background and monogram or vector icon
 function drawAppSquircle(
   ctx: CanvasRenderingContext2D,
   x: number,
@@ -282,25 +314,43 @@ function drawAppSquircle(
 ) {
   const brandColor = getBrandColor(appId);
   const radius = size * 0.28;
+  const svgImg = svgImageCache.get(appId);
 
-  // Squircle Background
-  ctx.fillStyle = theme === 'eink' ? '#e4e4e7' : brandColor;
-  ctx.beginPath();
-  ctx.roundRect(x, y, size, size, radius);
-  ctx.fill();
+  if (svgImg) {
+    // Squircle background for vector icon
+    ctx.fillStyle = theme === 'eink' ? '#f4f4f5' : '#181b24';
+    ctx.beginPath();
+    ctx.roundRect(x, y, size, size, radius);
+    ctx.fill();
 
-  // Subtle border
-  ctx.strokeStyle = theme === 'eink' ? '#18181b' : 'rgba(255, 255, 255, 0.25)';
-  ctx.lineWidth = Math.max(1, size * 0.03);
-  ctx.stroke();
+    // Subtle border
+    ctx.strokeStyle = theme === 'eink' ? '#d4d4d8' : 'rgba(255, 255, 255, 0.15)';
+    ctx.lineWidth = Math.max(1, size * 0.03);
+    ctx.stroke();
 
-  // Monogram letter
-  const letter = getAppMonogram(appName);
-  ctx.font = `bold ${Math.round(size * 0.48)}px Inter, system-ui, sans-serif`;
-  ctx.fillStyle = theme === 'eink' ? '#09090b' : '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(letter, x + size / 2, y + size / 2 + size * 0.02);
+    // Draw vector icon
+    const pad = Math.round(size * 0.16);
+    ctx.drawImage(svgImg, x + pad, y + pad, size - pad * 2, size - pad * 2);
+  } else {
+    // Squircle Background for monogram
+    ctx.fillStyle = theme === 'eink' ? '#e4e4e7' : brandColor;
+    ctx.beginPath();
+    ctx.roundRect(x, y, size, size, radius);
+    ctx.fill();
+
+    // Subtle border
+    ctx.strokeStyle = theme === 'eink' ? '#18181b' : 'rgba(255, 255, 255, 0.25)';
+    ctx.lineWidth = Math.max(1, size * 0.03);
+    ctx.stroke();
+
+    // Monogram letter
+    const letter = getAppMonogram(appName);
+    ctx.font = `bold ${Math.round(size * 0.48)}px Inter, system-ui, sans-serif`;
+    ctx.fillStyle = theme === 'eink' ? '#09090b' : '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(letter, x + size / 2, y + size / 2 + size * 0.02);
+  }
 
   // If evicted mainstream app: draw a distinct red diagonal strikethrough slash
   if (isEvicted) {
@@ -385,6 +435,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
     customTitle,
     sovereigntyScore,
     evictedCount,
+    customAlternatives,
   } = options;
 
   // Await font readiness if in browser to guarantee accurate text measurements
@@ -424,7 +475,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
   const outerPadding = 64;
   const headerTop = 52;
 
-  // Gather active items from catalog selections
+  // Gather active items from catalog selections and custom alternatives
   const activeItems: {
     categoryName: string;
     mainstreamId: string;
@@ -434,11 +485,13 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
 
   CATEGORIES.forEach((cat) => {
     const sel = selections[cat.id];
+    const customList = (customAlternatives && customAlternatives[cat.id]) || [];
+
     if (sel && sel.alternativeIds.length > 0) {
       const mainstream = cat.mainstreamApps.find((m) => m.id === sel.mainstreamId) || cat.mainstreamApps[0];
       const alternatives = sel.alternativeIds
         .map((altId) => {
-          const alt = cat.alternatives.find((a) => a.id === altId);
+          const alt = cat.alternatives.find((a) => a.id === altId) || customList.find((a) => a.id === altId);
           return alt ? { id: alt.id, name: alt.name, badge: alt.badges[0] || 'FOSS' } : null;
         })
         .filter(Boolean) as { id: string; name: string; badge: string }[];
@@ -453,6 +506,14 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
       }
     }
   });
+
+  // Preload authentic vector SVG icons for all active items
+  const allAppIds: string[] = [];
+  activeItems.forEach((item) => {
+    allAppIds.push(item.mainstreamId);
+    item.alternatives.forEach((a) => allAppIds.push(a.id));
+  });
+  await preloadAppIcons(allAppIds);
 
   // Sovereignty Score Badge (Top Right)
   const scoreText = `${sovereigntyScore}% SOVEREIGN`;
