@@ -1,1 +1,0 @@
-/home/simple/GEMINI.md

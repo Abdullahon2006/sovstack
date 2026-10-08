@@ -25,9 +25,8 @@ lerna-debug.log*
 .env.*
 !.env.example
 
-# User home configs
-.bash*
-.config/
-sharedDavid/
-.agents/
-skills-lock.json
+# Local / Editor configs
+.vscode/
+.idea/
+*.log
+
