@@ -5,7 +5,7 @@ import { usePackStore } from './store/packStore';
 import { Navbar } from './components/Navbar';
 import { SovereigntyHeader } from './components/SovereigntyHeader';
 import { CategoryPickerCard } from './components/CategoryPickerCard';
-import { GigamonDossierModal } from './components/GigamonDossierModal';
+import { VendorDossierModal } from './components/VendorDossierModal';
 import { ExportModal } from './components/ExportModal';
 import { ShareModal } from './components/ShareModal';
 import { DossiersPage } from './components/pages/DossiersPage';
@@ -16,7 +16,7 @@ import { PrivacyPage } from './components/pages/PrivacyPage';
 
 const PAGE_TITLES: Record<ActivePage, string> = {
   builder: 'SovStack · Digital Sovereignty Stack Builder',
-  dossiers: 'Surveillance Dossiers · SovStack',
+  dossiers: 'Big Tech Profiles · SovStack',
   alternatives: 'Privacy Tools Directory · SovStack',
   about: 'Manifesto · SovStack',
   faq: 'FAQ & Migration · SovStack',
@@ -208,7 +208,7 @@ export const App: React.FC = () => {
                 onClick={() => setActivePage('dossiers')}
                 className="hover:text-zinc-900 dark:hover:text-white transition"
               >
-                Surveillance Dossiers
+                Big Tech
               </button>
               <button
                 onClick={() => setActivePage('alternatives')}
@@ -244,7 +244,7 @@ export const App: React.FC = () => {
       </footer>
 
       {/* Dossier Modal */}
-      <GigamonDossierModal
+      <VendorDossierModal
         app={inspectedMainstream}
         onClose={() => setInspectedMainstream(null)}
       />

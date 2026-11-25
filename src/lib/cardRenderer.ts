@@ -796,7 +796,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   ctx.fillText(
-    `${evictedCount} Gigamons Evicted · Reclaim Your Digital Life`,
+    `${evictedCount} Platforms Replaced · Reclaim Your Digital Life`,
     outerPadding,
     footerY
   );

@@ -5,7 +5,7 @@ import {
   CardTheme,
   CardAspectRatio,
   PackSelection,
-  GigamonParent,
+  VendorParent,
   PrivacyAlternative,
   ActivePage,
 } from '../data/types';
@@ -299,8 +299,8 @@ export function usePackStore() {
   // Sovereignty Metrics Calculation
   const metrics = useMemo(() => {
     let activeCategoriesCount = 0;
-    const evictedParents = new Set<GigamonParent>();
-    const trackedParents = new Set<GigamonParent>();
+    const evictedParents = new Set<VendorParent>();
+    const trackedParents = new Set<VendorParent>();
     const neutralizedVectors = new Set<string>();
     let totalScorePoints = 0;
 

@@ -1,4 +1,4 @@
-export type GigamonParent = 
+export type VendorParent = 
   | 'Google (Alphabet)'
   | 'Meta (Facebook)'
   | 'Microsoft'
@@ -36,7 +36,7 @@ export type PrivacyBadge =
 export interface MainstreamApp {
   id: string;
   name: string;
-  parent: GigamonParent;
+  parent: VendorParent;
   riskLevel: RiskLevel;
   surveillanceVectors: SurveillanceVector[];
   summary: string;
@@ -69,8 +69,8 @@ export interface Category {
   alternatives: PrivacyAlternative[];
 }
 
-export interface GigamonDossier {
-  name: GigamonParent;
+export interface VendorDossier {
+  name: VendorParent;
   ticker?: string;
   revenueModel: string;
   surveillanceScope: string;

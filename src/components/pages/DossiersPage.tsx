@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { Search, ShieldAlert, AlertTriangle, ExternalLink } from 'lucide-react';
-import { GIGAMON_DOSSIERS } from '../../data/gigamons';
+import { Search, ShieldAlert, AlertTriangle } from 'lucide-react';
+import { VENDOR_DOSSIERS } from '../../data/dossiers';
 import { CATEGORIES } from '../../data/catalog';
-import { GigamonParent } from '../../data/types';
+import { VendorParent } from '../../data/types';
 import { AppIcon } from '../AppIcon';
 
 export const DossiersPage: React.FC = () => {
   const [query, setQuery] = useState('');
   const [selectedParent, setSelectedParent] = useState<string | null>(null);
 
-  const parentList = Object.keys(GIGAMON_DOSSIERS) as GigamonParent[];
+  const parentList = Object.keys(VENDOR_DOSSIERS) as VendorParent[];
 
   const filteredDossiers = parentList.filter((parent) => {
     if (selectedParent && selectedParent !== parent) return false;
     if (query.trim()) {
       const q = query.toLowerCase();
-      const d = GIGAMON_DOSSIERS[parent];
+      const d = VENDOR_DOSSIERS[parent];
       const matchName = parent.toLowerCase().includes(q);
       const matchModel = d.revenueModel.toLowerCase().includes(q);
       const matchScope = d.surveillanceScope.toLowerCase().includes(q);
@@ -26,7 +26,7 @@ export const DossiersPage: React.FC = () => {
   });
 
   // Collect mainstream apps associated with each parent
-  const getAppsForParent = (parent: GigamonParent) => {
+  const getAppsForParent = (parent: VendorParent) => {
     const apps: { id: string; name: string; category: string }[] = [];
     CATEGORIES.forEach((cat) => {
       cat.mainstreamApps.forEach((m) => {
@@ -44,13 +44,13 @@ export const DossiersPage: React.FC = () => {
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-950/40 px-3 py-1 text-xs font-semibold dark:text-red-400">
           <ShieldAlert className="h-3.5 w-3.5" />
-          <span>Surveillance Dossiers</span>
+          <span>Big Tech Profiles</span>
         </div>
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-          The Gigamons In Plain Sight
+          Big Tech Surveillance Profiles
         </h1>
         <p className="mx-auto max-w-2xl text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          Detailed corporate surveillance profiles of the tech conglomerates dominating the consumer web: their revenue models, tracking scopes, and documented regulatory privacy penalties.
+          Detailed corporate surveillance profiles of major tech platforms: their revenue models, tracking scopes, and documented regulatory privacy penalties.
         </p>
       </div>
 
@@ -69,12 +69,12 @@ export const DossiersPage: React.FC = () => {
 
         <div className="relative">
           <select
-            aria-label="Filter by monolith"
+            aria-label="Filter by company"
             value={selectedParent || ''}
             onChange={(e) => setSelectedParent(e.target.value || null)}
             className="w-full sm:w-auto appearance-none rounded-xl border border-zinc-200 bg-white px-3.5 py-2.5 pr-9 text-sm font-medium text-zinc-700 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-300 transition dark:hover:border-zinc-700 focus:border-zinc-400 dark:focus:border-zinc-500 focus:outline-none cursor-pointer"
           >
-            <option value="">All Monoliths ({parentList.length})</option>
+            <option value="">All Companies ({parentList.length})</option>
             {parentList.map((p) => (
               <option key={p} value={p}>
                 {p}
@@ -90,7 +90,7 @@ export const DossiersPage: React.FC = () => {
       {/* Dossier Cards Grid */}
       <div className="space-y-6">
         {filteredDossiers.map((parent) => {
-          const d = GIGAMON_DOSSIERS[parent];
+          const d = VENDOR_DOSSIERS[parent];
           const apps = getAppsForParent(parent);
 
           return (
@@ -117,7 +117,7 @@ export const DossiersPage: React.FC = () => {
                       )}
                     </div>
                     <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                      Surveillance Monolith Dossier
+                      Corporate Surveillance Profile
                     </span>
                   </div>
                 </div>
@@ -125,7 +125,7 @@ export const DossiersPage: React.FC = () => {
                 <div className="flex items-center gap-1.5 self-start sm:self-auto">
                   <span className="inline-flex items-center gap-1.5 rounded-lg bg-red-50 border border-red-200 text-red-700 dark:bg-red-950/60 dark:border-red-800/80 px-2.5 py-1 text-xs font-semibold dark:text-red-400 whitespace-nowrap">
                     <AlertTriangle className="h-3.5 w-3.5" />
-                    <span>Active Behavioral Harvester</span>
+                    <span>Data Collector</span>
                   </span>
                 </div>
               </div>

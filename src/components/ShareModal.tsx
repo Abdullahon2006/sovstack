@@ -83,7 +83,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   if (!isOpen) return null;
 
-  const defaultShareText = `I've evicted ${evictedCount} data-collecting gigamons and reached ${sovereigntyScore}% digital sovereignty! Check out my privacy stack on SovStack:`;
+  const defaultShareText = `I've replaced ${evictedCount} data-collecting platforms and reached ${sovereigntyScore}% digital sovereignty. Check out my privacy stack on SovStack:`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);

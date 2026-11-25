@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks: { id: ActivePage; label: string; icon: React.ReactNode }[] = [
     { id: 'builder', label: 'Builder', icon: <Layers className="h-4 w-4" /> },
-    { id: 'dossiers', label: 'Gigamons', icon: <ShieldAlert className="h-4 w-4" /> },
+    { id: 'dossiers', label: 'Big Tech', icon: <ShieldAlert className="h-4 w-4" /> },
     { id: 'alternatives', label: 'Alternatives', icon: <Sparkles className="h-4 w-4" /> },
     { id: 'about', label: 'Manifesto', icon: <BookOpen className="h-4 w-4" /> },
     { id: 'faq', label: 'FAQ', icon: <HelpCircle className="h-4 w-4" /> },

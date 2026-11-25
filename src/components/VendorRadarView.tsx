@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import { ShieldCheck, ShieldAlert, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, ChevronDown, ChevronUp } from 'lucide-react';
 import { CATEGORIES } from '../data/catalog';
-import { GIGAMON_DOSSIERS } from '../data/gigamons';
-import { GigamonParent, PackSelection } from '../data/types';
+import { VENDOR_DOSSIERS } from '../data/dossiers';
+import { VendorParent, PackSelection } from '../data/types';
 
-interface GigamonRadarViewProps {
+interface VendorRadarViewProps {
   selections: PackSelection;
   onFilterByParent: (parentName: string) => void;
 }
 
-export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
+export const VendorRadarView: React.FC<VendorRadarViewProps> = ({
   selections,
-  onFilterByParent,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Group mainstream apps by parent and check eviction status
-  const gigamonStatus = React.useMemo(() => {
+  const vendorStatus = React.useMemo(() => {
     const parents: Record<
-      GigamonParent,
+      VendorParent,
       { totalApps: number; replacedApps: number; apps: { catName: string; appName: string; isReplaced: boolean }[] }
     > = {
       'Google (Alphabet)': { totalApps: 0, replacedApps: 0, apps: [] },
@@ -56,7 +55,7 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
     return parents;
   }, [selections]);
 
-  const majorGigamons: GigamonParent[] = [
+  const majorVendors: VendorParent[] = [
     'Google (Alphabet)',
     'Meta (Facebook)',
     'Microsoft',
@@ -75,7 +74,7 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
           </div>
           <div>
             <h3 className="text-sm font-bold text-zinc-900 dark:text-white">
-              Gigamons Eviction Matrix
+              Big Tech Eviction Matrix
             </h3>
             <p className="text-xs text-zinc-500 dark:text-slate-400">
               Live tracking of your decoupling from surveillance conglomerates
@@ -94,8 +93,8 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
 
       {/* Quick Pills Overview */}
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
-        {majorGigamons.map((parent) => {
-          const stats = gigamonStatus[parent];
+        {majorVendors.map((parent) => {
+          const stats = vendorStatus[parent];
           const isEvicted = stats.replacedApps > 0 && stats.replacedApps >= stats.totalApps;
           const isPartiallyReplaced = stats.replacedApps > 0 && stats.replacedApps < stats.totalApps;
 
@@ -141,9 +140,9 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
       {isExpanded && (
         <div className="mt-5 border-t border-zinc-200 dark:border-slate-800/80 pt-4 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {majorGigamons.map((parent) => {
-              const stats = gigamonStatus[parent];
-              const dossier = GIGAMON_DOSSIERS[parent];
+            {majorVendors.map((parent) => {
+              const stats = vendorStatus[parent];
+              const dossier = VENDOR_DOSSIERS[parent];
               return (
                 <div
                   key={parent}

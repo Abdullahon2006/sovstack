@@ -1,6 +1,6 @@
-import { GigamonDossier, GigamonParent } from './types';
+import { VendorDossier, VendorParent } from './types';
 
-export const GIGAMON_DOSSIERS: Record<GigamonParent, GigamonDossier> = {
+export const VENDOR_DOSSIERS: Record<VendorParent, VendorDossier> = {
   'Google (Alphabet)': {
     name: 'Google (Alphabet)',
     ticker: 'NASDAQ: GOOGL',

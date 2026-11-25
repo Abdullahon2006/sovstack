@@ -1,18 +1,18 @@
 import React from 'react';
-import { X, ShieldAlert } from 'lucide-react';
+import { X } from 'lucide-react';
 import { MainstreamApp } from '../data/types';
-import { GIGAMON_DOSSIERS } from '../data/gigamons';
+import { VENDOR_DOSSIERS } from '../data/dossiers';
 import { AppIcon } from './AppIcon';
 
-interface GigamonDossierModalProps {
+interface VendorDossierModalProps {
   app: MainstreamApp | null;
   onClose: () => void;
 }
 
-export const GigamonDossierModal: React.FC<GigamonDossierModalProps> = ({ app, onClose }) => {
+export const VendorDossierModal: React.FC<VendorDossierModalProps> = ({ app, onClose }) => {
   if (!app) return null;
 
-  const dossier = GIGAMON_DOSSIERS[app.parent] || GIGAMON_DOSSIERS['Other Monoliths'];
+  const dossier = VENDOR_DOSSIERS[app.parent] || VENDOR_DOSSIERS['Other Monoliths'];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
@@ -78,7 +78,7 @@ export const GigamonDossierModal: React.FC<GigamonDossierModalProps> = ({ app, o
           </div>
 
           <div>
-            <h4 className="font-semibold text-zinc-900 dark:text-zinc-200">Regulatory Actions & Breaches</h4>
+            <h4 className="font-semibold text-zinc-900 dark:text-zinc-200">Regulatory Actions &amp; Breaches</h4>
             <p className="mt-1 leading-relaxed text-zinc-600 dark:text-zinc-400">{dossier.privacyViolationsHighlight}</p>
           </div>
         </div>

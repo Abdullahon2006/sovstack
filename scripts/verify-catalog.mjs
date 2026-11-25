@@ -12,24 +12,24 @@ async function runVerification() {
   // We can read catalog.ts and verify structure or use esbuild/tsc/node loader
   // Let's write a robust verification that checks the compiled/exported definitions
   const catalogPath = path.resolve(__dirname, '../src/data/catalog.ts');
-  const gigamonsPath = path.resolve(__dirname, '../src/data/gigamons.ts');
+  const dossiersPath = path.resolve(__dirname, '../src/data/dossiers.ts');
   const presetsPath = path.resolve(__dirname, '../src/data/presets.ts');
 
   if (!fs.existsSync(catalogPath)) throw new Error('catalog.ts missing');
-  if (!fs.existsSync(gigamonsPath)) throw new Error('gigamons.ts missing');
+  if (!fs.existsSync(dossiersPath)) throw new Error('dossiers.ts missing');
   if (!fs.existsSync(presetsPath)) throw new Error('presets.ts missing');
 
   const catalogContent = fs.readFileSync(catalogPath, 'utf8');
-  const gigamonsContent = fs.readFileSync(gigamonsPath, 'utf8');
+  const dossiersContent = fs.readFileSync(dossiersPath, 'utf8');
   const presetsContent = fs.readFileSync(presetsPath, 'utf8');
 
   // Verify non-empty and well-formed
   console.log(`✓ catalog.ts exists (${catalogContent.length} bytes)`);
-  console.log(`✓ gigamons.ts exists (${gigamonsContent.length} bytes)`);
+  console.log(`✓ dossiers.ts exists (${dossiersContent.length} bytes)`);
   console.log(`✓ presets.ts exists (${presetsContent.length} bytes)`);
 
-  // Verify essential gigamon parent names
-  const requiredGigamons = [
+  // Verify essential vendor parent names
+  const requiredVendors = [
     'Google (Alphabet)',
     'Meta (Facebook)',
     'Microsoft',
@@ -40,12 +40,12 @@ async function runVerification() {
     'Adobe',
   ];
 
-  for (const gigamon of requiredGigamons) {
-    if (!gigamonsContent.includes(gigamon)) {
-      throw new Error(`Missing expected gigamon: ${gigamon}`);
+  for (const vendor of requiredVendors) {
+    if (!dossiersContent.includes(vendor)) {
+      throw new Error(`Missing expected vendor: ${vendor}`);
     }
   }
-  console.log('✓ All major gigamon dossiers present in gigamons.ts');
+  console.log('✓ All major Big Tech profiles present in dossiers.ts');
 
   // Verify core categories
   const requiredCategories = [
