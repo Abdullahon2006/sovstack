@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function runVerification() {
-  console.log('🔍 Starting DeGigamon Catalog Integrity Check...');
+  console.log('🔍 Starting SovStack Catalog Integrity Check...');
 
   // Dynamically import typescript catalog files using Node
   // We can read catalog.ts and verify structure or use esbuild/tsc/node loader

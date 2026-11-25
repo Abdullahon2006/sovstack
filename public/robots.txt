@@ -1,4 +1,4 @@
-# DeGigamon robots.txt - Fully crawlable for Search Engines & AI Indexers
+# SovStack robots.txt - Fully crawlable for Search Engines & AI Indexers
 User-agent: *
 Allow: /
 
@@ -25,5 +25,5 @@ User-agent: Google-Extended
 Allow: /
 
 # Sitemaps & LLM Documentation Standards
-Sitemap: https://degigamon.org/sitemap.xml
-llms-txt: https://degigamon.org/llms.txt
+Sitemap: https://abdullahon2006.github.io/sovstack/sitemap.xml
+llms-txt: https://abdullahon2006.github.io/sovstack/llms.txt

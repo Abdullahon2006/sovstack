@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { CATEGORIES } from './data/catalog';
-import { MainstreamApp } from './data/types';
+import { MainstreamApp, ActivePage } from './data/types';
 import { usePackStore } from './store/packStore';
 import { Navbar } from './components/Navbar';
 import { SovereigntyHeader } from './components/SovereigntyHeader';
@@ -13,7 +13,15 @@ import { AlternativesPage } from './components/pages/AlternativesPage';
 import { AboutPage } from './components/pages/AboutPage';
 import { FaqPage } from './components/pages/FaqPage';
 import { PrivacyPage } from './components/pages/PrivacyPage';
-import { ShieldCheck, Heart } from 'lucide-react';
+
+const PAGE_TITLES: Record<ActivePage, string> = {
+  builder: 'SovStack · Digital Sovereignty Stack Builder',
+  dossiers: 'Surveillance Dossiers · SovStack',
+  alternatives: 'Privacy Tools Directory · SovStack',
+  about: 'Manifesto · SovStack',
+  faq: 'FAQ & Migration · SovStack',
+  privacy: 'Privacy Policy & Terms · SovStack',
+};
 
 export const App: React.FC = () => {
   const {
@@ -33,11 +41,11 @@ export const App: React.FC = () => {
     setCustomTitle,
     searchQuery,
     setSearchQuery,
-    activeFilter,
-    setActiveFilter,
     selectMainstream,
     toggleAlternative,
     removeCategory,
+    colorMode,
+    toggleColorMode,
     applyPreset,
     resetPack,
     metrics,
@@ -48,10 +56,15 @@ export const App: React.FC = () => {
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
 
-  // Filter categories according to search and badge filters
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = PAGE_TITLES[activePage] || PAGE_TITLES.builder;
+    }
+  }, [activePage]);
+
+  // Filter categories according to search query
   const filteredCategories = useMemo(() => {
     return CATEGORIES.filter((category) => {
-      // 1. Search Query filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchesCategory =
@@ -80,27 +93,12 @@ export const App: React.FC = () => {
         }
       }
 
-      // 2. Active Badge filter
-      if (activeFilter) {
-        const customList = customAlternatives[category.id] || [];
-        const hasMatchingAlternative =
-          category.alternatives.some((alt) =>
-            alt.badges.includes(activeFilter as any)
-          ) ||
-          customList.some((alt) =>
-            alt.badges.includes(activeFilter as any)
-          );
-        if (!hasMatchingAlternative) {
-          return false;
-        }
-      }
-
       return true;
     });
-  }, [searchQuery, activeFilter, customAlternatives]);
+  }, [searchQuery, customAlternatives]);
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100 flex flex-col font-sans transition-colors duration-200">
       {/* Navbar with page routing */}
       <Navbar
         activePage={activePage}
@@ -112,6 +110,8 @@ export const App: React.FC = () => {
         onOpenShare={() => setIsShareOpen(true)}
         onApplyPreset={applyPreset}
         onReset={resetPack}
+        colorMode={colorMode}
+        onToggleColorMode={toggleColorMode}
       />
 
       {/* Main Content Area Driven by activePage */}
@@ -123,27 +123,20 @@ export const App: React.FC = () => {
               sovereigntyScore={metrics.sovereigntyPercentage}
               activeCategoriesCount={metrics.activeCategoriesCount}
               totalCategoriesCount={CATEGORIES.length}
-              evictedCount={metrics.evictedParents.length}
-              neutralizedVectorsCount={metrics.neutralizedVectorsCount}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
-              activeFilter={activeFilter}
-              onFilterChange={setActiveFilter}
             />
 
             {/* Category Cards List */}
             <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 w-full space-y-4">
               {filteredCategories.length === 0 ? (
-                <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-10 text-center">
-                  <p className="text-xs text-zinc-400">No categories match your search.</p>
+                <div className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 p-10 text-center">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400">No categories match your search.</p>
                   <button
-                    onClick={() => {
-                      setSearchQuery('');
-                      setActiveFilter(null);
-                    }}
-                    className="mt-3 rounded-lg bg-zinc-800 px-3 py-1.5 text-xs font-medium text-white hover:bg-zinc-700"
+                    onClick={() => setSearchQuery('')}
+                    className="mt-3 rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-800 px-3 py-1.5 text-xs font-medium dark:text-white dark:hover:bg-zinc-700"
                   >
-                    Clear filters
+                    Clear search
                   </button>
                 </div>
               ) : (
@@ -188,18 +181,18 @@ export const App: React.FC = () => {
       </div>
 
       {/* Comprehensive Publishable Footer */}
-      <footer className="mt-20 border-t border-zinc-800/80 bg-[#0c0c0e] px-4 py-12 sm:px-6 text-sm text-zinc-400">
+      <footer className="mt-20 border-t border-zinc-200 bg-white text-zinc-600 dark:border-zinc-800/80 dark:bg-[#0c0c0e] dark:text-zinc-400 px-4 py-12 sm:px-6 text-sm transition-colors duration-200">
         <div className="mx-auto max-w-5xl space-y-7">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-b border-zinc-800/60 pb-7">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-b border-zinc-200 dark:border-zinc-800/60 pb-7">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5">
-                <span className="text-base font-bold text-white">DeGigamon</span>
-                <span className="rounded-md bg-emerald-950/80 px-2 py-0.5 text-xs font-medium text-emerald-400 border border-emerald-800/60">
+                <span className="text-base font-bold text-zinc-900 dark:text-white">SovStack</span>
+                <span className="rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/80 px-2 py-0.5 text-xs font-medium dark:text-emerald-400 dark:border-emerald-800/60">
                   Open Source
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-zinc-400">
-                The client-side alternative to PrivacyPack.org · Reclaim your digital sovereignty.
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                Open-source digital sovereignty suite · Reclaim your digital independence.
               </p>
             </div>
 
@@ -207,59 +200,45 @@ export const App: React.FC = () => {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm">
               <button
                 onClick={() => setActivePage('builder')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
                 Pack Builder
               </button>
               <button
                 onClick={() => setActivePage('dossiers')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
                 Surveillance Dossiers
               </button>
               <button
                 onClick={() => setActivePage('alternatives')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
                 Privacy Tools
               </button>
               <button
                 onClick={() => setActivePage('about')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
                 Manifesto
               </button>
               <button
                 onClick={() => setActivePage('faq')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
                 FAQ & Migration
               </button>
               <button
                 onClick={() => setActivePage('privacy')}
-                className="hover:text-white transition"
+                className="hover:text-zinc-900 dark:hover:text-white transition"
               >
-                Zero-Telemetry Privacy
+                Privacy & Terms
               </button>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-zinc-500">
-            <p>
-              100% Client-Side · Zero Cookies · Zero Tracking · MIT License
-            </p>
-            <p className="flex items-center gap-1">
-              <span>Verified for</span>
-              <a
-                href="https://privacypack.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-zinc-400 underline hover:text-white"
-              >
-                PrivacyPack
-              </a>
-              <span>standard compatibility</span>
-            </p>
+          <div className="flex items-center justify-between text-xs text-zinc-500">
+            <p>MIT License</p>
           </div>
         </div>
       </footer>

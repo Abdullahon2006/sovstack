@@ -8,6 +8,7 @@ import {
   ExternalLink,
   MessageSquare,
   Globe,
+  AtSign,
 } from 'lucide-react';
 import { PackSelection, CardTheme, CardAspectRatio } from '../data/types';
 import {
@@ -82,7 +83,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   if (!isOpen) return null;
 
-  const defaultShareText = `I've evicted ${evictedCount} data-collecting gigamons and reached ${sovereigntyScore}% digital sovereignty! Check out my privacy stack on DeGigamon:`;
+  const defaultShareText = `I've evicted ${evictedCount} data-collecting gigamons and reached ${sovereigntyScore}% digital sovereignty! Check out my privacy stack on SovStack:`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -150,7 +151,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   const shareToReddit = () => {
     const redditUrl = `https://reddit.com/submit?title=${encodeURIComponent(
-      `My Privacy Wins: ${sovereigntyScore}% Sovereign on DeGigamon`
+      `My Privacy Wins: ${sovereigntyScore}% Sovereign on SovStack`
     )}&url=${encodeURIComponent(shareUrl)}`;
     window.open(redditUrl, '_blank', 'noopener,noreferrer');
   };
@@ -167,20 +168,20 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 dark:bg-black/85 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="relative flex flex-col w-full max-w-lg overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 shadow-2xl text-zinc-100"
+        className="relative flex flex-col w-full max-w-lg overflow-hidden rounded-xl border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 shadow-2xl dark:text-zinc-100"
         role="dialog"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4 bg-zinc-950">
+        <div className="flex items-center justify-between border-b border-zinc-200 bg-zinc-50 dark:border-zinc-800 px-6 py-4 dark:bg-zinc-950">
           <div className="flex items-center gap-2.5">
-            <Share2 className="h-5 w-5 text-white" />
-            <h2 className="text-base sm:text-lg font-bold text-white">Share Your Privacy Wins</h2>
+            <Share2 className="h-5 w-5 text-zinc-900 dark:text-white" />
+            <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">Share Your Privacy Wins</h2>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
+            className="rounded-lg p-1.5 text-zinc-500 hover:bg-zinc-200/70 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white transition"
           >
             <X className="h-5 w-5" />
           </button>
@@ -190,7 +191,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         <div className="p-6 space-y-5">
           {/* Card Preview Thumbnail */}
           {previewUrl && (
-            <div className="flex items-center justify-center rounded-xl border border-zinc-800 bg-black p-3 max-h-48 overflow-hidden">
+            <div className="flex items-center justify-center rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-black p-3 max-h-48 overflow-hidden">
               <img
                 src={previewUrl}
                 alt="Card Preview"
@@ -201,84 +202,84 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
           {/* Social Share Buttons */}
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
               Post to Social Networks
             </span>
             <div className="mt-2.5 grid grid-cols-2 gap-2.5 text-sm font-medium">
               <button
                 onClick={shareToTwitter}
-                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-white dark:hover:bg-zinc-700 transition"
               >
-                <span>𝕏</span>
+                <AtSign className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                 <span>Post on X</span>
               </button>
 
               <button
                 onClick={shareToBluesky}
-                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-white dark:hover:bg-zinc-700 transition"
               >
-                <span>🦋</span>
+                <Globe className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                 <span>Bluesky</span>
               </button>
 
               <button
                 onClick={shareToMastodon}
-                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-white dark:hover:bg-zinc-700 transition"
               >
-                <span>🐘</span>
+                <MessageSquare className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                 <span>Mastodon</span>
               </button>
 
               <button
                 onClick={shareToReddit}
-                className="flex items-center justify-center gap-2.5 rounded-xl border border-zinc-700 bg-zinc-800/80 p-2.5 text-white hover:bg-zinc-700 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-white dark:hover:bg-zinc-700 transition"
               >
-                <span>🤖</span>
+                <Share2 className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
                 <span>Reddit</span>
               </button>
             </div>
           </div>
 
           {/* Quick Actions (Copy Link, Copy Image, System Share) */}
-          <div className="space-y-2.5 pt-2.5 border-t border-zinc-800">
+          <div className="space-y-2.5 pt-2.5 border-t border-zinc-200 dark:border-zinc-800">
             {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
               <button
                 onClick={handleNativeShare}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-800 border border-zinc-700 p-3 text-sm font-semibold text-white hover:bg-zinc-700 transition"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-100 border border-zinc-200 p-3 text-sm font-semibold text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:hover:bg-zinc-700 transition"
               >
                 <Share2 className="h-4 w-4" />
-                <span>Open System Share Sheet (Mobile / AirDrop)</span>
+                <span>Open System Share Sheet</span>
               </button>
             )}
 
             <div className="grid grid-cols-2 gap-2.5 text-sm">
               <button
                 onClick={handleCopyLink}
-                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-950 p-2.5 text-zinc-200 hover:bg-zinc-800 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-800 transition"
               >
-                {copiedLink ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-                <span>{copiedLink ? 'Copied Link!' : 'Copy Link'}</span>
+                {copiedLink ? <Check className="h-4 w-4 text-emerald-500 dark:text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                <span>{copiedLink ? 'Copied Link' : 'Copy Link'}</span>
               </button>
 
               <button
                 onClick={handleCopyImage}
-                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-950 p-2.5 text-zinc-200 hover:bg-zinc-800 transition"
+                className="flex items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50 p-2.5 text-zinc-800 hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-zinc-800 transition"
               >
-                {copiedImage ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-                <span>{copiedImage ? 'Copied Image!' : 'Copy PNG'}</span>
+                {copiedImage ? <Check className="h-4 w-4 text-emerald-500 dark:text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                <span>{copiedImage ? 'Copied Image' : 'Copy PNG'}</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-zinc-800 px-6 py-3.5 bg-zinc-950">
-          <span className="text-xs text-zinc-400">
-            100% Client-Side · No server upload required
+        <div className="flex items-center justify-between border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 px-6 py-3.5 dark:bg-zinc-950">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
+            Generated locally · No server upload
           </span>
           <button
             onClick={onClose}
-            className="rounded-xl bg-zinc-800 px-5 py-2 text-sm font-semibold text-white hover:bg-zinc-700 transition"
+            className="rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-800 px-5 py-2 text-sm font-semibold dark:text-white dark:hover:bg-zinc-700 transition"
           >
             Close
           </button>

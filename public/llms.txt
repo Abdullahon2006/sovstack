@@ -1,14 +1,14 @@
-# DeGigamon
+# SovStack
 
-> The open-source, client-side alternative to PrivacyPack.org. Break free from data-collecting gigamons and build your digital sovereignty stack.
+> Open-source digital sovereignty stack builder. Replace surveillance platforms and build your independent privacy stack.
 
 ## Overview
-DeGigamon is a 100% client-side privacy tool suite that allows users to replace surveillance tech monoliths (Google, Meta, Microsoft, Apple, Amazon, ByteDance, OpenAI) with verified Free and Open Source (FOSS), End-to-End Encrypted (E2EE), and self-hostable alternatives across 24 software categories.
+SovStack is an open-source privacy tool suite that allows users to replace surveillance tech monoliths (Google, Meta, Microsoft, Apple, Amazon, ByteDance, OpenAI) with verified Free and Open Source (FOSS), End-to-End Encrypted (E2EE), and self-hostable alternatives across 24 software categories.
 
-- **Website**: https://degigamon.org
+- **Website**: https://abdullahon2006.github.io/sovstack
 - **License**: MIT License (Open Source)
-- **Data Custody**: 100% Client-Side. Zero cookies, zero remote tracking, zero telemetry.
-- **Full LLM Documentation**: https://degigamon.org/llms-full.txt
+- **Privacy**: Zero cookies, zero remote tracking, zero telemetry.
+- **Full LLM Documentation**: https://abdullahon2006.github.io/sovstack/llms-full.txt
 
 ## Key Software Categories & Top Alternatives
 1. **Email**: Replace Gmail/Outlook with Proton Mail, Tuta Mail, mailbox.org, Posteo.

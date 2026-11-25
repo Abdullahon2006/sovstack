@@ -3,40 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem('sovstack_color_mode_v1');
+          var isDark = mode !== 'light';
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
 
     <!-- Primary Meta Tags -->
-    <title>DeGigamon · The Open-Source PrivacyPack Alternative | Break Free from Big Tech</title>
-    <meta name="title" content="DeGigamon · The Open-Source PrivacyPack Alternative" />
-    <meta name="description" content="Break free from data-collecting gigamons. Curate your digital sovereignty stack, evict Google, Meta, and Microsoft, and export your privacy wins in high-res cards. 100% client-side, zero telemetry." />
-    <meta name="keywords" content="degigamon, privacypack, privacypack alternative, degoogle, digital sovereignty, privacy tools, foss, e2ee, self-hosted, privacy pack, zero telemetry, open source" />
-    <meta name="author" content="DeGigamon Open Source Initiative" />
+    <title>SovStack · Digital Sovereignty Stack Builder</title>
+    <meta name="title" content="SovStack · Digital Sovereignty Stack Builder" />
+    <meta name="description" content="Curate your digital sovereignty stack, replace Google, Meta, and Microsoft with verified FOSS, E2EE, and self-hosted tools, and export your privacy wins." />
+    <meta name="keywords" content="sovstack, degoogle, digital sovereignty, privacy tools, foss, e2ee, self-hosted, privacy stack, zero telemetry, open source" />
+    <meta name="author" content="SovStack Contributors" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#090a0f" />
-    <link rel="canonical" href="https://degigamon.org/" />
+    <link rel="canonical" href="https://abdullahon2006.github.io/sovstack/" />
 
     <!-- Open Graph / Facebook / LinkedIn / Discord -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://degigamon.org/" />
-    <meta property="og:title" content="DeGigamon · The Open-Source PrivacyPack Alternative" />
-    <meta property="og:description" content="Break free from data-collecting gigamons. Curate your privacy stack across 24 categories with verified FOSS, E2EE, and self-hosted tools. 100% client-side." />
-    <meta property="og:image" content="https://degigamon.org/og-image.svg" />
-    <meta property="og:site_name" content="DeGigamon" />
+    <meta property="og:url" content="https://abdullahon2006.github.io/sovstack/" />
+    <meta property="og:title" content="SovStack · Digital Sovereignty Stack Builder" />
+    <meta property="og:description" content="Curate your privacy stack across 24 categories with verified FOSS, E2EE, and self-hosted tools." />
+    <meta property="og:image" content="https://abdullahon2006.github.io/sovstack/og-image.svg" />
+    <meta property="og:site_name" content="SovStack" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://degigamon.org/" />
-    <meta name="twitter:title" content="DeGigamon · The Open-Source PrivacyPack Alternative" />
-    <meta name="twitter:description" content="Break free from data-collecting gigamons. Curate your digital sovereignty stack, track your score, and export your privacy wins. 100% client-side." />
-    <meta name="twitter:image" content="https://degigamon.org/og-image.svg" />
+    <meta name="twitter:url" content="https://abdullahon2006.github.io/sovstack/" />
+    <meta name="twitter:title" content="SovStack · Digital Sovereignty Stack Builder" />
+    <meta name="twitter:description" content="Curate your digital sovereignty stack, track your score, and export your privacy wins." />
+    <meta name="twitter:image" content="https://abdullahon2006.github.io/sovstack/og-image.svg" />
 
     <!-- Favicon & Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./favicon.svg" />
 
     <!-- Schema.org JSON-LD Structured Data for Google & AI Crawlers -->
     <script type="application/ld+json">
@@ -45,10 +50,10 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": "https://degigamon.org/#app",
-          "name": "DeGigamon",
-          "url": "https://degigamon.org",
-          "description": "An open-source, client-side digital sovereignty suite and alternative to PrivacyPack.org.",
+          "@id": "https://abdullahon2006.github.io/sovstack/#app",
+          "name": "SovStack",
+          "url": "https://abdullahon2006.github.io/sovstack",
+          "description": "An open-source digital sovereignty suite for replacing surveillance platforms with verified FOSS, E2EE, and self-hosted alternatives.",
           "applicationCategory": "SecurityApplication",
           "operatingSystem": "Web Browser",
           "offers": {
@@ -58,9 +63,8 @@
           },
           "license": "https://opensource.org/licenses/MIT",
           "featureList": [
-            "100% Client-Side Architecture",
             "Zero Telemetry & Zero Cookies",
-            "24 Software Categories & 231 Evaluated Services",
+            "24 Software Categories & 215+ Evaluated Services",
             "Surveillance Monolith Corporate Dossiers",
             "Digital Sovereignty Score Calculation",
             "High-Resolution PNG Canvas Card Exporter",
@@ -69,22 +73,22 @@
         },
         {
           "@type": "FAQPage",
-          "@id": "https://degigamon.org/#faq",
+          "@id": "https://abdullahon2006.github.io/sovstack/#faq",
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What is DeGigamon?",
+              "name": "What is SovStack?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "DeGigamon is an open-source, client-side alternative to PrivacyPack.org that helps users replace corporate surveillance monopolies (Google, Meta, Microsoft, Apple, Amazon) with verified FOSS, E2EE, and self-hosted tools."
+                "text": "SovStack is an open-source digital sovereignty builder that helps users replace corporate surveillance monopolies (Google, Meta, Microsoft, Apple, Amazon) with verified FOSS, E2EE, and self-hosted tools."
               }
             },
             {
               "@type": "Question",
-              "name": "Does DeGigamon collect or store user data?",
+              "name": "Does SovStack collect or store user data?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. DeGigamon has zero backend databases, zero telemetry, zero cookies, and zero external analytics scripts. All calculations occur strictly in your local browser runtime."
+                "text": "No. SovStack has zero backend databases, zero telemetry, zero cookies, and zero external analytics scripts. All state stays in your local browser."
               }
             },
             {
@@ -101,7 +105,7 @@
     }
     </script>
   </head>
-  <body class="bg-[#090a0f] text-zinc-100 min-h-screen font-sans selection:bg-emerald-500/30 selection:text-emerald-300 antialiased">
+  <body class="bg-zinc-50 text-zinc-900 dark:bg-[#09090b] dark:text-zinc-100 min-h-screen font-sans selection:bg-emerald-500/30 selection:text-emerald-700 dark:selection:text-emerald-300 antialiased transition-colors duration-200">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

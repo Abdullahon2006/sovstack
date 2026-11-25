@@ -317,20 +317,13 @@ function drawAppSquircle(
   const svgImg = svgImageCache.get(appId);
 
   if (svgImg) {
-    // Squircle background for vector icon
-    ctx.fillStyle = theme === 'eink' ? '#f4f4f5' : '#181b24';
+    // Draw vector icon cleanly clipped to rounded squircle
+    ctx.save();
     ctx.beginPath();
     ctx.roundRect(x, y, size, size, radius);
-    ctx.fill();
-
-    // Subtle border
-    ctx.strokeStyle = theme === 'eink' ? '#d4d4d8' : 'rgba(255, 255, 255, 0.15)';
-    ctx.lineWidth = Math.max(1, size * 0.03);
-    ctx.stroke();
-
-    // Draw vector icon
-    const pad = Math.round(size * 0.16);
-    ctx.drawImage(svgImg, x + pad, y + pad, size - pad * 2, size - pad * 2);
+    ctx.clip();
+    ctx.drawImage(svgImg, x, y, size, size);
+    ctx.restore();
   } else {
     // Squircle Background for monogram
     ctx.fillStyle = theme === 'eink' ? '#e4e4e7' : brandColor;
@@ -552,7 +545,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
   // Subtitle / User Name
   ctx.font = `500 22px ${t.fontFamily}`;
   ctx.fillStyle = t.textSecondary;
-  const subString = `Curated by ${userName || 'Digital Sovereign'} · Generated with DeGigamon`;
+  const subString = `Curated by ${userName || 'Digital Sovereign'} · Generated with SovStack`;
   const displaySub = truncateText(ctx, subString, maxTitleWidth);
   ctx.fillText(displaySub, outerPadding, headerTop + 58);
 
@@ -582,7 +575,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
     ctx.font = `18px ${t.fontFamily}`;
     ctx.fillStyle = t.textMuted;
     ctx.fillText(
-      'Select privacy alternatives in DeGigamon to generate your shareable card.',
+      'Select privacy alternatives in SovStack to generate your shareable card.',
       width / 2,
       emptyBoxY + 100
     );
@@ -810,7 +803,7 @@ export async function renderCardToCanvas(options: RenderOptions): Promise<HTMLCa
 
   ctx.textAlign = 'right';
   ctx.fillStyle = t.textMuted;
-  ctx.fillText('DeGigamon · 100% Client-Side · Zero Telemetry', width - outerPadding, footerY);
+  ctx.fillText('SovStack · Open Source · MIT License', width - outerPadding, footerY);
 
   return canvas;
 }
@@ -827,7 +820,7 @@ export async function exportCardAsBlob(options: RenderOptions): Promise<Blob> {
 
 export async function downloadCardImage(
   options: RenderOptions,
-  filename = 'degigamon-privacy-pack.png'
+  filename = 'sovstack-privacy-pack.png'
 ): Promise<void> {
   const blob = await exportCardAsBlob(options);
   const url = URL.createObjectURL(blob);

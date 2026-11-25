@@ -67,17 +67,17 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
   ];
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-[#0d121c]/80 p-5 shadow-lg backdrop-blur-sm">
+    <div className="rounded-2xl border border-zinc-200 bg-white dark:border-slate-800 dark:bg-[#0d121c]/80 p-5 shadow-sm dark:shadow-lg backdrop-blur-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20">
             <ShieldAlert className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white">
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-white">
               Gigamons Eviction Matrix
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-zinc-500 dark:text-slate-400">
               Live tracking of your decoupling from surveillance conglomerates
             </p>
           </div>
@@ -85,7 +85,7 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs text-slate-300 hover:bg-slate-800"
+          className="flex items-center gap-1 rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-700 hover:bg-zinc-100 dark:border-slate-800 dark:bg-slate-900 px-2.5 py-1 text-xs dark:text-slate-300 dark:hover:bg-slate-800"
         >
           <span>{isExpanded ? 'Collapse' : 'Inspect Matrix'}</span>
           {isExpanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
@@ -96,7 +96,6 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
         {majorGigamons.map((parent) => {
           const stats = gigamonStatus[parent];
-          const dossier = GIGAMON_DOSSIERS[parent];
           const isEvicted = stats.replacedApps > 0 && stats.replacedApps >= stats.totalApps;
           const isPartiallyReplaced = stats.replacedApps > 0 && stats.replacedApps < stats.totalApps;
 
@@ -105,16 +104,16 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
               key={parent}
               className={`flex flex-col justify-between rounded-xl border p-2.5 transition text-left ${
                 isEvicted
-                  ? 'border-emerald-500/40 bg-emerald-950/20 text-emerald-200'
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/20 dark:text-emerald-200'
                   : isPartiallyReplaced
-                  ? 'border-amber-500/40 bg-amber-950/20 text-amber-200'
-                  : 'border-slate-800 bg-slate-900/40 text-slate-400'
+                  ? 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/20 dark:text-amber-200'
+                  : 'border-zinc-200 bg-zinc-50 text-zinc-600 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-400'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold truncate">{parent.split(' ')[0]}</span>
                 {isEvicted ? (
-                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                  <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                 ) : (
                   <span className="text-[10px] font-mono font-semibold">
                     {stats.replacedApps}/{stats.totalApps}
@@ -124,13 +123,13 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
 
               <div className="mt-2 text-[10px]">
                 {isEvicted ? (
-                  <span className="font-semibold text-emerald-400">100% Evicted</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Evicted</span>
                 ) : isPartiallyReplaced ? (
-                  <span className="font-semibold text-amber-400">
+                  <span className="font-semibold text-amber-600 dark:text-amber-400">
                     {Math.round((stats.replacedApps / stats.totalApps) * 100)}% Replaced
                   </span>
                 ) : (
-                  <span className="text-slate-500">Unmitigated</span>
+                  <span className="text-zinc-500 dark:text-slate-500">Unmitigated</span>
                 )}
               </div>
             </div>
@@ -140,7 +139,7 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
 
       {/* Expanded Breakdown */}
       {isExpanded && (
-        <div className="mt-5 border-t border-slate-800/80 pt-4 animate-in fade-in duration-200">
+        <div className="mt-5 border-t border-zinc-200 dark:border-slate-800/80 pt-4 animate-in fade-in duration-200">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {majorGigamons.map((parent) => {
               const stats = gigamonStatus[parent];
@@ -148,15 +147,15 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
               return (
                 <div
                   key={parent}
-                  className="rounded-xl border border-slate-800 bg-slate-900/60 p-3.5 text-xs"
+                  className="rounded-xl border border-zinc-200 bg-zinc-50 dark:border-slate-800 dark:bg-slate-900/60 p-3.5 text-xs"
                 >
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                    <span className="font-bold text-white">{parent}</span>
-                    <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-300">
+                  <div className="flex items-center justify-between pb-2 border-b border-zinc-200 dark:border-slate-800">
+                    <span className="font-bold text-zinc-900 dark:text-white">{parent}</span>
+                    <span className="rounded bg-zinc-200 text-zinc-700 dark:bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono dark:text-slate-300">
                       {stats.replacedApps}/{stats.totalApps} Reclaimed
                     </span>
                   </div>
-                  <p className="mt-2 text-[11px] text-slate-400 line-clamp-2">
+                  <p className="mt-2 text-[11px] text-zinc-600 dark:text-slate-400 line-clamp-2">
                     {dossier.surveillanceScope}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-1">
@@ -165,8 +164,8 @@ export const GigamonRadarView: React.FC<GigamonRadarViewProps> = ({
                         key={i}
                         className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${
                           a.isReplaced
-                            ? 'bg-emerald-900/40 text-emerald-300 border border-emerald-800/40'
-                            : 'bg-rose-950/40 text-rose-300 border border-rose-900/40 line-through'
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-300 dark:border-emerald-800/40'
+                            : 'bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-900/40 line-through'
                         }`}
                       >
                         {a.appName}

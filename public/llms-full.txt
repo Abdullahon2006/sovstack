@@ -1,18 +1,18 @@
-# DeGigamon Full Documentation & Reference
+# SovStack Full Documentation & Reference
 
-> Complete technical catalog, dossier archive, threat modeling rules, and architecture specification for DeGigamon.
+> Complete technical catalog, dossier archive, threat modeling rules, and architecture specification for SovStack.
 
 ## Platform Identity
-- Name: DeGigamon
-- Web URL: https://degigamon.org
-- Source Code: https://github.com/simple/degigamon
-- Purpose: Open-source, client-side, zero-telemetry alternative to PrivacyPack.org.
+- Name: SovStack
+- Web URL: https://abdullahon2006.github.io/sovstack/
+- Source Code: https://github.com/Abdullahon2006/sovstack
+- Purpose: Open-source, zero-telemetry digital sovereignty stack builder.
 - Target Audience: Privacy advocates, security professionals, open-source developers, and mainstream consumers seeking practical digital sovereignty.
 
 ## Architectural Guarantees
 1. Zero Telemetry: No Google Analytics, Plausible, PostHog, or tracking beacons.
 2. Zero Cookies: No HTTP cookies or session tracking.
-3. 100% Client-Side Computation: State is computed in React 19 / TypeScript inside browser memory.
+3. Local Browser Computation: State is computed in React 19 / TypeScript inside browser memory.
 4. Stateless Sharing: Stack configurations are serialized into standard RFC 3986 URL hash fragments (`#pack=...`), which are never sent over HTTP request headers to hosting servers.
 5. High-Resolution Canvas Card Generation: Locally rendered PNG comparison cards using HTML5 Canvas with vector graphics and dynamic grid distribution.
 

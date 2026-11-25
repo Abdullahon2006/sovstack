@@ -10,8 +10,13 @@ import {
   ActivePage,
 } from '../data/types';
 
-const STORAGE_KEY = 'degigamon_pack_v1';
-const CUSTOM_ALTS_KEY = 'degigamon_custom_alts_v1';
+const STORAGE_KEY = 'sovstack_pack_v1';
+const CUSTOM_ALTS_KEY = 'sovstack_custom_alts_v1';
+const COLOR_MODE_KEY = 'sovstack_color_mode_v1';
+const LEGACY_STORAGE_KEY = 'degigamon_pack_v1';
+const LEGACY_CUSTOM_ALTS_KEY = 'degigamon_custom_alts_v1';
+
+export type ColorMode = 'dark' | 'light';
 
 function parseHashPage(hash: string): ActivePage {
   const clean = hash.replace(/^[#\/]+/, '').split('?')[0].split('&')[0];
@@ -78,9 +83,11 @@ export function usePackStore() {
       }
     }
 
-    // 2. Try localStorage
+    // 2. Try localStorage (with legacy key fallback)
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(CUSTOM_ALTS_KEY);
+      const saved =
+        localStorage.getItem(CUSTOM_ALTS_KEY) ??
+        localStorage.getItem(LEGACY_CUSTOM_ALTS_KEY);
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -122,9 +129,11 @@ export function usePackStore() {
       }
     }
 
-    // 2. Try localStorage
+    // 2. Try localStorage (with legacy key fallback)
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved =
+        localStorage.getItem(STORAGE_KEY) ??
+        localStorage.getItem(LEGACY_STORAGE_KEY);
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -144,7 +153,30 @@ export function usePackStore() {
   const [userName, setUserName] = useState<string>('Sovereign Citizen');
   const [customTitle, setCustomTitle] = useState<string>('My Privacy Wins');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [colorMode, setColorMode] = useState<ColorMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(COLOR_MODE_KEY);
+      if (saved === 'light' || saved === 'dark') return saved;
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const isDark = colorMode === 'dark';
+      document.documentElement.classList.toggle('dark', isDark);
+      document.documentElement.style.colorScheme = colorMode;
+    }
+    try {
+      localStorage.setItem(COLOR_MODE_KEY, colorMode);
+    } catch (e) {
+      console.warn('LocalStorage error:', e);
+    }
+  }, [colorMode]);
+
+  const toggleColorMode = useCallback(() => {
+    setColorMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   // Save selections to localStorage
   useEffect(() => {
@@ -346,11 +378,11 @@ export function usePackStore() {
     setCustomTitle,
     searchQuery,
     setSearchQuery,
-    activeFilter,
-    setActiveFilter,
     selectMainstream,
     toggleAlternative,
     removeCategory,
+    colorMode,
+    toggleColorMode,
     applyPreset,
     resetPack,
     metrics,
