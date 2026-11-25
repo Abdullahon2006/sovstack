@@ -75,14 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <path d="M32 20.2 L37.8 23.3 L32 26.4 L26.2 23.3 Z" fill="#064E3B" opacity="0.35" />
             </svg>
             <div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white">SovStack</span>
-                {activePage === 'builder' && (
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium hidden md:inline whitespace-nowrap">
-                    {activeCategoriesCount}/{totalCategoriesCount} switched
-                  </span>
-                )}
-              </div>
+              <span className="text-base sm:text-lg font-bold tracking-tight text-zinc-900 dark:text-white">SovStack</span>
             </div>
           </button>
 

@@ -17,7 +17,7 @@ export const SovereigntyHeader: React.FC<SovereigntyHeaderProps> = ({
   onSearchChange,
 }) => {
   return (
-    <section className="border-b border-zinc-200 bg-white dark:border-zinc-800/80 dark:bg-[#0c0c0e] px-4 py-10 sm:px-6 transition-colors duration-200">
+    <section className="px-4 pt-10 pb-2 sm:px-6">
       <div className="mx-auto max-w-4xl text-center">
         {/* Clean Headline */}
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
@@ -52,7 +52,7 @@ export const SovereigntyHeader: React.FC<SovereigntyHeaderProps> = ({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search apps or categories..."
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-10 pr-8 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-200 dark:placeholder-zinc-500 transition dark:focus:border-zinc-500 focus:outline-none"
+              className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-8 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900/90 dark:text-zinc-200 dark:placeholder-zinc-500 transition dark:focus:border-zinc-500 focus:outline-none"
             />
             {searchQuery && (
               <button
