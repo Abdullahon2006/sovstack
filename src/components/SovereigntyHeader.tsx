@@ -38,7 +38,7 @@ export const SovereigntyHeader: React.FC<SovereigntyHeaderProps> = ({
           <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
             <div
               className="h-full rounded-full bg-emerald-600 dark:bg-white transition-all duration-300"
-              style={{ width: `${Math.max(4, sovereigntyScore)}%` }}
+              style={{ width: sovereigntyScore === 0 ? '0%' : `${Math.max(4, sovereigntyScore)}%` }}
             />
           </div>
         </div>

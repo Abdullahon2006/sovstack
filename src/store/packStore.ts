@@ -143,9 +143,8 @@ export function usePackStore() {
       }
     }
 
-    // Default: use De-Google preset
-    const defaultPreset = PRESET_STACKS[0];
-    return defaultPreset ? defaultPreset.selections : {};
+    // Default: start with a clean empty stack
+    return {};
   });
 
   const [theme, setTheme] = useState<CardTheme>('matrix');
